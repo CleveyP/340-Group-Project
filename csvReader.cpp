@@ -12,6 +12,8 @@ Current can read the file properly but the delimiter is messed up
 #include <string>
 #include <sstream>
 #include <vector>
+#include <iomanip>
+
 
 using namespace std;
 
@@ -41,12 +43,14 @@ struct creditsStruct
 // Test method to split an input line by a given delimiter
 vector<string> delimitThis (const string &splitThis, char delimiter) {
     
+    int currentCol = 1;
     stringstream stringStream (splitThis);
     string dataValue;
     vector<string> splitVector;
 
     while (getline (stringStream, dataValue, delimiter)) {
         splitVector.push_back (dataValue);
+        currentCol++;
     }
     return splitVector;
 }
@@ -57,11 +61,11 @@ int main()
     ifstream inputFile;
     inputFile.open("tmdb_5000_credits.csv");
     string currentLine; // String that stores the current line
-    int currentCol; // Int that tracks the current column
     int lineNum = 1; // Int that tracks the current line number
     string colLabels; // String that stores the not-so-useful first line which has the column labels
     vector<string> currentLineVector;
     
+
     creditsStruct firstCredits;
 
 
