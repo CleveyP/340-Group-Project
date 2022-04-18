@@ -37,5 +37,8 @@
     <None Include="..\csvs\tmdb_5000_movies.csv">
       <Filter>Source Files</Filter>
     </None>
+    <None Include="..\.gitignore">
+      <Filter>Source Files</Filter>
+    </None>
   </ItemGroup>
 </Project>
