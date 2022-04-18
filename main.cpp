@@ -17,10 +17,11 @@ using namespace std;
 
 int main()
 {
-    ifstream fileIn;
-    fileIn.open("csvs//tmdb_5000_credits.csv");
-    if (!fileIn.is_open()) {
-        cout << "failed" << endl;
+    ifstream fileIn; 
+    fileIn.open("../tmdb_5000_movies.csv"); //Read CSV.
+
+    if (!fileIn) {
+        cerr << "The file cannot be opened. It either is misspelled or missing." << endl;
     }
     else{
         //Not functioning correctly, only printing out "movie_id,title,cast,crew"
