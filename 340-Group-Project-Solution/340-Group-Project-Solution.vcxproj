@@ -146,8 +146,9 @@
     <ClInclude Include="..\functions.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\csvs\tmdb_5000_credits.csv" />
+    <None Include="..\csvs\tmdb_5000_movies.csv" />
     <None Include="..\README.md" />
-    <None Include="..\tmdb_5000_credits.zip" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
