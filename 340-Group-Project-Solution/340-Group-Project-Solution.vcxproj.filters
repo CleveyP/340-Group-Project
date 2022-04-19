@@ -34,11 +34,11 @@
     <None Include="..\.gitignore">
       <Filter>Source Files</Filter>
     </None>
-    <None Include="..\tmdb_5000_credits.csv">
-      <Filter>Source Files</Filter>
+    <None Include="..\CSV Files\tmdb_5000_credits.csv">
+      <Filter>Resource Files</Filter>
     </None>
-    <None Include="..\tmdb_5000_movies.csv">
-      <Filter>Source Files</Filter>
+    <None Include="..\CSV Files\tmdb_5000_movies.csv">
+      <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>
 </Project>

@@ -147,9 +147,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\.gitignore" />
+    <None Include="..\CSV Files\tmdb_5000_credits.csv" />
+    <None Include="..\CSV Files\tmdb_5000_movies.csv" />
     <None Include="..\README.md" />
-    <None Include="..\tmdb_5000_credits.csv" />
-    <None Include="..\tmdb_5000_movies.csv" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

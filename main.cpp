@@ -18,9 +18,9 @@ using namespace std;
 int main()
 {
     ifstream fileIn; 
-    fileIn.open("../tmdb_5000_movies.csv"); //Read CSV.
+    fileIn.open("../CSV Files/tmdb_5000_credits.csv"); //Read CSV.
 
-    if (!fileIn) {
+    if (!fileIn) { //Test if file works
         cerr << "The file cannot be opened. It either is misspelled or missing." << endl;
     }
     else{
