@@ -12,6 +12,7 @@ int main()
         cout << "failed" << endl;
     }
     else{
+        //Not functioning correctly, only printing out "movie_id,title,cast,crew"
         string fileNum1;
         fileIn >> fileNum1;
         cout << fileNum1 << endl;
