@@ -1,8 +1,6 @@
 // Original from GeeksForGeeks
-// Modified to try and get it to work for our project
+// Modified to be a loop to work for our project
 
-// CPP program to demonstrate working of string
-// find to search a string
 #include <iostream>
 #include <string>
 #include <vector>

@@ -2,8 +2,8 @@
 /*
 Stephen Martel
 4/19/2022
-WIP TSV File reader
-Current can read the file properly up until it reaches a line with an empty cell like Jurassic world
+TSV File reader for the credits file
+There's a lotta comments...
 
 */
 
@@ -16,22 +16,11 @@ Current can read the file properly up until it reaches a line with an empty cell
 
 using namespace std;
 
-// Placeholder struct for movie data
-struct movieStructTest
-{
-    string movieTitle = "";     // col 1 movie title
-    int revenue = 0;            // col 2 movie revenue
-    int budget = 0;             // col 3 movie budget
-    vector<string> genres = {}; // col 4 movie's genres
-    string releaseDate = "";    // col 5 movie's release date TO DO: YEAR ONLY for release date
-    double rating = 0;          // col 6 movie average rating
-    int voteCount = 0;          // col 7 store number of votes towards the rating?
-};
 
 // Struct for storing Credits.tsv data
-// TO DO: Convert existing cast and crew into a vector that only has the relevant info
+// Done now: Converted existing cast and crew into a vector or sring that only has the relevant info
 // FOR CAST: Only actor names, will need to be a vector
-// For CREW: Probably only director name, could be a string instead
+// For CREW: Director name in string form
 struct creditsStruct
 {
     string title = ""; // col 1    Stores movie title
