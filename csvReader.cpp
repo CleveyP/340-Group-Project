@@ -14,7 +14,6 @@ Current can read the file properly but the delimiter is messed up
 #include <vector>
 #include <iomanip>
 
-
 using namespace std;
 
 
