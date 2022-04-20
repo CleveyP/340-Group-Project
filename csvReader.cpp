@@ -35,7 +35,7 @@ struct creditsStruct
     string movieID; // col 1
     string title; // col 2
     string cast; // col 3
-    string crew; // col 4
+    string director; // col 4
 };
 
 
