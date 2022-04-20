@@ -71,7 +71,22 @@ vector<string> convertStringToArray(string convertThis, string conversionType)
     { // Failsafe to only run the function if the given string is not empty
         if (conversionType == "cast")
         {
+            int findIndex = 0;
+            while (convertThis.find("\"name\": \"", findIndex) != std::string::npos) // While there are still ""name": " in the string (meaning more actors to add)
+            {
+                int stringIndex = convertThis.find("\"name\": \"", findIndex);
+                char nextChar = 'a';
+                string foundName = "";
+                int nextCharIndex = stringIndex;
+                while(nextChar != '\"'){
+                    nextChar = convertThis.at(nextCharIndex + 1); // The next char is the next character after the index found in the find() function initially
+                    foundName.push_back(nextChar); // Add each char in the string until a quotation is reached, meaning the end of the actor name
+                    nextCharIndex++; // Increment the current index by 1 to get each subsequent letter in the actor's name, if there are more
+                }
+                newArray.push_back(foundName); // Add the completed actor name to the newly forming array
+            }
             cout << "cast conversion" << endl; // debug print line
+            return newArray;
         }
         else if (conversionType == "crew")
         {
