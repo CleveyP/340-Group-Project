@@ -24,7 +24,7 @@ struct movieStructTest
   vector<string> genres; // aka col 2
   string releaseDate; // aka col 12
   int revenue; // aka col 13
-  string movieName; // aka col 18 title
+  string movieTitle; // aka col 18 title
   double rating; // aka col 19 vote avg
 };
 

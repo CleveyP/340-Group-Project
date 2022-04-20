@@ -19,20 +19,24 @@ using namespace std;
 // Placeholder struct for movie data
 struct movieStructTest
 {
-    int budget = 0;        // aka col 1
-    vector<string> genres; // aka col 2
-    string releaseDate;    // aka col 12
-    int revenue;           // aka col 13
-    string movieName;      // aka col 18 title
-    double rating;         // aka col 19 vote avg
+    string movieTitle = "";      // col 1 movie title
+    int revenue = 0;           // col 2 movie revenue
+    int budget = 0;        // col 3 movie budget
+    vector<string> genres = {}; // col 4 movie's genres
+    string releaseDate = "";    // col 5 movie's release date TO DO: YEAR ONLY for release date
+    double rating = 0;         // col 6 movie average rating
+    int voteCount = 0;  // col 7 store number of votes towards the rating?
 };
 
 // Struct for storing Credits.tsv data
+// TO DO: Convert existing cast and crew into a vector that only has the relevant info
+// FOR CAST: Only actor names, will need to be a vector
+// For CREW: Probably only director name, could be a string instead
 struct creditsStruct
 {
-    string title; // col 1    Stores movie title
-    string cast;  // col 2    Stores movie cast array
-    string crew;  // col 3    Stores movie crew array
+    string title = ""; // col 1    Stores movie title
+    string cast = "";  // col 2    Stores movie cast array
+    string crew = "";  // col 3    Stores movie crew array
 };
 
 // Test function to split an input line by a given delimiter
