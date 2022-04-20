@@ -21,10 +21,9 @@ int main()
     while (foundIndex != string::npos){
         cout << "Next found starting index is " << foundIndex << endl;
 
-        int stringIndex = foundIndex;
         char nextChar = 'a';
         string foundName = "";
-        int nextCharIndex = stringIndex;
+        int nextCharIndex = foundIndex;
         while(nextChar != ','){
                     nextChar = convertThis.at(nextCharIndex + 8); // The next char is the next character after the index found in the find() function +8 to get past the found word and the quotes and spaces..
                     foundName.push_back(nextChar); // Add each char in the string until a quotation is reached, meaning the end of the actor name

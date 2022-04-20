@@ -35,7 +35,7 @@ struct movieStructTest
 struct creditsStruct
 {
     string title = ""; // col 1    Stores movie title
-    string cast = "";  // col 2    Stores movie cast array
+    vector<string> cast = {};  // col 2    Stores movie cast array
     string crew = "";  // col 3    Stores movie crew array
 };
 
@@ -71,23 +71,36 @@ vector<string> convertStringToArray(string convertThis, string conversionType)
     { // Failsafe to only run the function if the given string is not empty
         if (conversionType == "cast")
         {
-            int findIndex = 0;
-            while (convertThis.find("\"name\": \"", findIndex) != std::string::npos) // While there are still ""name": " in the string (meaning more actors to add)
+            string susString = "name\": \""; // Searching for this
+            vector<string> newArray = {}; // An empty array which will eventually hold the actors names and will be returned
+
+            // Find all occurrences of sus string (in this case it's name)
+            size_t foundIndex = convertThis.find("name\": \"");
+            while (foundIndex != string::npos) // Continue until there are no more sus strings to be found
             {
-                int stringIndex = convertThis.find("\"name\": \"", findIndex);
+                // cout << "Next found starting index is " << foundIndex << endl; debug line
+
+                // A couple variables with placeholder values, 
                 char nextChar = 'a';
                 string foundName = "";
-                int nextCharIndex = stringIndex;
-                while(nextChar != '\"'){
-                    nextChar = convertThis.at(nextCharIndex + 1); // The next char is the next character after the index found in the find() function initially
-                    foundName.push_back(nextChar); // Add each char in the string until a quotation is reached, meaning the end of the actor name
-                    nextCharIndex++; // Increment the current index by 1 to get each subsequent letter in the actor's name, if there are more
+
+                // A copy of the found index, which can be modified safely
+                int nextCharIndex = foundIndex;
+                while (nextChar != ',') // A comma marks the end of the actor's name, so we stop there
+                {
+                    nextChar = convertThis.at(nextCharIndex + 8); // The next char is the next character after the index found in the find() function +8 to get past the found word and the quotes and spaces..
+                    foundName.push_back(nextChar);                // Add each char in the string until a quotation is reached, meaning the end of the actor name
+                    nextCharIndex++;                              // Increment the current index by 1 to get each subsequent letter in the actor's name, if there are more
                 }
-                newArray.push_back(foundName); // Add the completed actor name to the newly forming array
+                foundName.pop_back();                                     // Delete the comma
+                foundName.pop_back();                                     // Delete the quotes
+                //cout << "pushing back: " << foundName << endl; Debug line to output the name being added to the new array
+                newArray.push_back(foundName);                            // Add the completed actor name to the newly forming array
+                foundIndex = convertThis.find(susString, foundIndex + 8); // +8 because that's the length of "name\": \"" excluding the escape characters \     "
             }
-            cout << "cast conversion" << endl; // debug print line
             return newArray;
         }
+        
         else if (conversionType == "crew")
         {
             cout << "crew conversion" << endl; // debug print line
@@ -138,8 +151,7 @@ int main()
             // Only store cast data if it exists and it's actually the cast data, checked if it contains "character" which is exclusive to cast
             if (currentLineVector.size() >= 2 && currentLineVector.at(1).find("character") != std::string::npos)
             {
-                convertStringToArray(currentLineVector.at(1), "cast");
-                (*newRowStruct).cast = currentLineVector.at(1); // Save the movie cast data
+                (*newRowStruct).cast = convertStringToArray(currentLineVector.at(1), "cast"); // Save the movie cast data after is has been converted from a string to array
             }
 
             // Only store crew data if it exists and it's actually the crew data (checked by if it contains department which is exclusive to crew, != npos means it's in there somewhere)
@@ -151,7 +163,7 @@ int main()
 
             vectorOfRowVectors.push_back(newRowStruct); // Save this struct in the big vector of row structs
 
-            cout << i << endl; // Debugging line to find out how many times this runs all the way to the end of this loop
+            //cout << i << endl; // Debugging line to find out how many times this runs all the way to the end of this loop
             i++;
         }
 
@@ -163,8 +175,17 @@ int main()
         // Testing printing loop, change increment to however many to print out
         for (int increment = 0; increment < 5; increment++)
         {
+            cout << endl << "Printing the first " << increment << " movie names...";
             cout << vectorOfRowVectors.at(increment)->title << endl;
         }
+
+        
+        // Test loop to print out the entire modified cast list from the first movie
+        cout << endl << "The of the cast array is: " << vectorOfRowVectors.at(0)->cast.size() << endl;
+        for(int i = 0; i < vectorOfRowVectors.at(0)->cast.size(); i++){
+        cout << vectorOfRowVectors.at(0)->cast.at(i) << endl;
+    }
+
     }
 
     return 0;
