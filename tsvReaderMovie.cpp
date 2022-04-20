@@ -22,7 +22,7 @@ struct movieStruct
     int revenue = 0;            // col 2 movie revenue
     int budget = 0;             // col 3 movie budget
     vector<string> genres = {}; // col 4 movie's genres
-    string releaseDate = "";    // col 5 movie's release date TO DO: YEAR ONLY for release date
+    int releaseDate = 0;            // col 5 movie's release date TO DO: YEAR ONLY for release date
     double rating = 0;          // col 6 movie average rating
     int voteCount = 0;          // col 7 store number of votes towards the rating?
 };
@@ -58,7 +58,7 @@ vector<string> convertStringToArray(string convertThis, string conversionType)
     // and a string that identifies which type of string this array is supposed to be
     if (convertThis.size() > 0)
     { // Failsafe to only run the function if the given string is not empty
-        if (conversionType == "cast")
+        if (conversionType == "cast" || conversionType == "genre")
         {
             string susString = "name\": \""; // Searching for this
             vector<string> newArray = {}; // An empty array which will eventually hold the actors names and will be returned
@@ -75,16 +75,20 @@ vector<string> convertStringToArray(string convertThis, string conversionType)
 
                 // A copy of the found index, which can be modified safely
                 int nextCharIndex = foundIndex;
-                while (nextChar != ',') // A comma marks the end of the actor's name, so we stop there
+                while (nextChar != ',' && nextChar != ']') // A comma marks the end of the actor or genre name, so we stop there
                 {
                     nextChar = convertThis.at(nextCharIndex + 8); // The next char is the next character after the index found in the find() function +8 to get past the found word and the quotes and spaces..
-                    foundName.push_back(nextChar);                // Add each char in the string until a quotation is reached, meaning the end of the actor name
-                    nextCharIndex++;                              // Increment the current index by 1 to get each subsequent letter in the actor's name, if there are more
+                    foundName.push_back(nextChar);                // Add each char in the string until a quotation is reached, meaning the end of the actor or genre name
+                    nextCharIndex++;                              // Increment the current index by 1 to get each subsequent letter in the actor or genre name, if there are more
                 }
                 foundName.pop_back();                                     // Delete the comma
                 foundName.pop_back();                                     // Delete the quotes
+                if (conversionType == "genre"){
+                    foundName.pop_back(); // Genre has an extra quote so remove that
+                }
+                
                 //cout << "pushing back: " << foundName << endl; Debug line to output the name being added to the new array
-                newArray.push_back(foundName);                            // Add the completed actor name to the newly forming array
+                newArray.push_back(foundName);                            // Add the completed actor or genre name to the newly forming array
                 foundIndex = convertThis.find(susString, foundIndex + 8); // +8 because that's the length of "name\": \"" excluding the escape characters \     "
             }
             return newArray;
@@ -94,41 +98,6 @@ vector<string> convertStringToArray(string convertThis, string conversionType)
     return newArray;
 }
 
-string whoIsDirector(string convertThis){
-            
-
-            string directorName = "";
-            //cout << "crew conversion" << endl; // debug print line
-            string susString = "\"Director\", \"name\": \""; // Searching for this, 21 chars long excluding escape characters
-            
-            if (convertThis.find(susString) != string::npos)
-            {
-                // Find all occurrences of sus string (in this case it's name)
-            size_t foundIndex = convertThis.find(susString);
-            while (directorName.size() == 0) // Continue until the director name is greater than 0 (A name is filled in)
-            {
-                // cout << "Next found starting index is " << foundIndex << endl; debug line
-
-                // A tracker of the current char, used to end the loop on a comma
-                char nextChar = 'a';
-
-                // A copy of the found index, which can be modified safely
-                int nextCharIndex = foundIndex;
-                while (nextChar != ',' && nextChar != ']') // A comma marks the end of the actor's name, so we stop there
-                {
-                    nextChar = convertThis.at(nextCharIndex + 21); // The next char is the next character in the index after the found index in the find() function +21 to get past the found word and the quotes and spaces..
-                    directorName.push_back(nextChar);                // Add each char in the string until a quotation is reached, meaning the end of the director name
-                    nextCharIndex++;                              // Increment the current index by 1 to get each subsequent letter in the director's name, if there are more
-                }
-                directorName.pop_back();        // Delete the comma
-                directorName.pop_back();        // Delete the quote
-                directorName.pop_back();        // Delete the quote
-            }
-            cout << directorName << endl;
-            }
-            
-            return directorName;
-}
 
 
 
@@ -137,7 +106,7 @@ string whoIsDirector(string convertThis){
 int main()
 {
     ifstream inputFile;
-    inputFile.open("./TSV Files/credits.tsv");
+    inputFile.open("./TSV Files/movies.tsv");
     string currentLine; // String that stores the current line
     int rowNum = 1;     // Int that tracks the current row number
     string colLabels;   // String that stores the not-so-useful first line which has the column labels
@@ -145,7 +114,7 @@ int main()
 
     if (!inputFile)
     { // If there is no input file... (it didn't open) then display an error message
-        cout << "The file did not open correctly, exiting the program";
+        cout << "The movies file did not open correctly, exiting the program";
         return -1;
     }
     else
@@ -153,7 +122,7 @@ int main()
         getline(inputFile, currentLine); // stores the first line which has the column labels in it
         // ______________________________________________________________________________________
 
-        vector<movieStruct *> vectorOfRowVectors; // The big vector holding all of the various row structs
+        vector<movieStruct *> vectorOfMovieRowVectors; // The big vector holding all of the various row structs
         int i = 0;                                  // debugging int to find out which line this might break on
 
         while (!inputFile.eof()) // While not at the end of the file...
@@ -167,26 +136,46 @@ int main()
             currentLineVector = delimitThis(currentLine, '\t'); // Call the delimiter function to split this line up into columns
 
             // TO DO:
-            // check the length of current line vector if length is 1 store title and continue, if length is 2 string find for department to determine if the 1 array is cast or crew
-            // store it in the correct one, let other one stay uninitalized empty array
+            // CONVERT THIS WHOLE THING TO WORK FOR MOVIES TSV
 
             movieStruct *newRowStruct = new movieStruct;
-            (*newRowStruct).title = currentLineVector.at(0); // Save the movie title data
+            (*newRowStruct).movieTitle = currentLineVector.at(0); // Save the movie title data
+            //cout << "Movie title data saved" << endl;     DEBUG LINE
 
-            // Only store cast data if it exists and it's actually the cast data, checked if it contains "character" which is exclusive to cast
-            if (currentLineVector.size() >= 2 && currentLineVector.at(1).find("character") != std::string::npos)
+            //(*newRowStruct).revenue = std::stoi(currentLineVector.at(1)); // Save the movie revenue data, supposedly stoi converts string to int
+
+            //(*newRowStruct).budget = std::stoi(currentLineVector.at(2)); // Save the movie budget data, supposedly stoi converts string to int
+
+            // Only store genre data if it exists and it's actually the genre data, checked if it contains "[{\"" which is exclusive to genre within the movies.tsv file
+            if (currentLineVector.size() >= 4 && currentLineVector.at(3).find("[{\"") != std::string::npos)
             {
-                (*newRowStruct).cast = convertStringToArray(currentLineVector.at(1), "cast"); // Save the movie cast data after is has been converted from a string to array
+                //cout << "Before saving" << endl; DEBUG LINE
+                (*newRowStruct).genres = convertStringToArray(currentLineVector.at(3), "genre"); // Save the movie genre data after is has been converted from a string to array
             }
+            // __________________________________________________________________________
 
-            // Only store crew data if it exists and it's actually the crew data (checked by if it contains department which is exclusive to crew, != npos means it's in there somewhere)
-            if (currentLineVector.size() >= 3 && currentLineVector.at(2).find("department") != std::string::npos)
-            {
-                
-                (*newRowStruct).director = whoIsDirector(currentLineVector.at(2)); // Save the director data
+            // If there is a release date (tested by having a length greater than or equal to 4)
+            /*
+            if(currentLineVector.at(4).size() >= 4){
+            (*newRowStruct).releaseDate = std::stoi(currentLineVector.at(4).substr(0, 4)); // Save the first 4 numbers of release date, supposedly stoi converts string to int
             }
+            */
 
-            vectorOfRowVectors.push_back(newRowStruct); // Save this struct in the big vector of row structs
+            // If there is a rating value, it should have a length greater than or equal to 1, if so, store it
+            /*
+            if(currentLineVector.at(5).size() >= 1){
+            (*newRowStruct).rating = std::stod(currentLineVector.at(5)); // Save the rating as a double, supposedly stod converts string to double
+            }
+            */
+
+            // If there is a vote count value, it should have a length greater than or equal to 1, if so, store it
+            /*
+            if(currentLineVector.at(6).size() >= 1){
+            (*newRowStruct).voteCount = std::stoi(currentLineVector.at(6)); // Save the vote count as int, supposedly stoi converts string to int
+            }
+            */
+            
+            vectorOfMovieRowVectors.push_back(newRowStruct); // Save this struct in the big vector of row structs
 
             //cout << i << endl; // Debugging line to find out how many times this runs all the way to the end of this loop
             i++;
@@ -198,30 +187,32 @@ int main()
         // cout << vectorOfRowVectors.at(0)->cast << endl;
         // cout << vectorOfRowVectors.at(0)->crew << endl;
         // Testing printing loop, change increment to however many to print out
-        cout << endl << "Printing the first " << 5 << " movie names...";
+        cout << endl << "Printing the first " << 5 << " movie names..." << endl;
         for (int increment = 0; increment < 5; increment++)
         {
             
-            cout << vectorOfRowVectors.at(increment)->title << endl;
+            cout << vectorOfMovieRowVectors.at(increment)->movieTitle << endl;
         }
 
         
-        // Test loop to print out the entire modified cast list from the first movie
-        cout << endl << "The  cast array is: " << vectorOfRowVectors.at(0)->cast.size() << endl;
-        for(int i = 0; i < vectorOfRowVectors.at(0)->cast.size(); i++){
-        cout << vectorOfRowVectors.at(0)->cast.at(i) << endl;
+        // Test loop to print out the entire modified genre list from the first movie
+        cout << endl << "The  genre array is size: " << vectorOfMovieRowVectors.at(0)->genres.size() << endl;
+        for(int i = 0; i < vectorOfMovieRowVectors.at(0)->genres.size(); i++){
+        cout << vectorOfMovieRowVectors.at(0)->genres.at(i) << endl;
     }
 
+/*
 cout << endl << "Printing the first " << "all" << " director names...";
     // Test loop to print out the first 10 directors
-        for (int increment = 0; increment < vectorOfRowVectors.size(); increment++)
+        for (int increment = 0; increment < vectorOfMovieRowVectors.size(); increment++)
         
         {
-            cout << vectorOfRowVectors.at(increment)->director << endl;
+            cout << vectorOfMovieRowVectors.at(increment)->revenue << endl;
         }
-        
+        */
 
     }
+    
 
     return 0;
 }
