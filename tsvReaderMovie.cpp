@@ -19,9 +19,10 @@ using namespace std;
 struct movieStruct
 {
     string movieTitle = "";     // col 1 movie title
-    int revenue = 0;            // col 2 movie revenue
+    double revenue = 0;            // col 2 movie revenue
     int budget = 0;             // col 3 movie budget
     vector<string> genres = {}; // col 4 movie's genres
+    int runtime = 0;
     int releaseDate = 0;        // col 5 movie's release date TO DO: YEAR ONLY for release date
     double rating = 0;          // col 6 movie average rating
     int voteCount = 0;          // col 7 store number of votes towards the rating?
@@ -136,9 +137,12 @@ int main()
             (*newRowStruct).movieTitle = currentLineVector.at(0); // Save the movie title data
             // cout << "Movie title data saved" << endl;     DEBUG LINE
 
-            //(*newRowStruct).revenue = std::stoi(currentLineVector.at(1)); // Save the movie revenue data, supposedly stoi converts string to int
 
-            //(*newRowStruct).budget = std::stoi(currentLineVector.at(2)); // Save the movie budget data, supposedly stoi converts string to int
+            //cout << currentLineVector.at(0) << "  Revenue: " << currentLineVector.at(1) << endl;
+            (*newRowStruct).revenue = std::stod(currentLineVector.at(1)); // Save the movie revenue data, supposedly stoi converts string to int
+
+            //cout << currentLineVector.at(0) << "  Budget: " << currentLineVector.at(2) << endl;
+            (*newRowStruct).budget = std::stoi(currentLineVector.at(2)); // Save the movie budget data, supposedly stoi converts string to int
 
             // Only store genre data if it exists and it's actually the genre data, checked if it contains "[{\"" which is exclusive to genre within the movies.tsv file
             if (currentLineVector.size() >= 4 && currentLineVector.at(3).find("[{\"") != std::string::npos)
@@ -149,25 +153,31 @@ int main()
             // __________________________________________________________________________
 
             // If there is a release date (tested by having a length greater than or equal to 4)
-            /*
+            
             if(currentLineVector.at(4).size() >= 4){
+            //cout << currentLineVector.at(0) << "  Release Date: " << std::stoi(currentLineVector.at(4).substr(0, 4)) << endl; 
             (*newRowStruct).releaseDate = std::stoi(currentLineVector.at(4).substr(0, 4)); // Save the first 4 numbers of release date, supposedly stoi converts string to int
             }
-            */
+            
+            // Movie runtime is usually longer than 0 minutes so check if that's true first
+            if(currentLineVector.at(5).size() >= 1){
+            //cout << currentLineVector.at(0) << "  Runtime: " << std::stoi(currentLineVector.at(5)) << endl; 
+            (*newRowStruct).runtime = std::stoi(currentLineVector.at(5).substr(0, 5)); // Save the first 4 numbers of release date, supposedly stoi converts string to int
+            }
 
             // If there is a rating value, it should have a length greater than or equal to 1, if so, store it
-            /*
-            if(currentLineVector.at(5).size() >= 1){
-            (*newRowStruct).rating = std::stod(currentLineVector.at(5)); // Save the rating as a double, supposedly stod converts string to double
+            if(currentLineVector.at(6).size() >= 1){
+            //cout << currentLineVector.at(0) << "  Rating: " << std::stod(currentLineVector.at(6)) << endl;
+            (*newRowStruct).rating = std::stod(currentLineVector.at(6)); // Save the rating as a double, supposedly stod converts string to double
             }
-            */
+            
 
             // If there is a vote count value, it should have a length greater than or equal to 1, if so, store it
-            /*
-            if(currentLineVector.at(6).size() >= 1){
-            (*newRowStruct).voteCount = std::stoi(currentLineVector.at(6)); // Save the vote count as int, supposedly stoi converts string to int
+            if(currentLineVector.at(7).size() >= 1){
+            //cout << currentLineVector.at(0) << "  Vote Count: " << std::stoi(currentLineVector.at(7)) << endl; 
+            (*newRowStruct).voteCount = std::stoi(currentLineVector.at(7)); // Save the vote count as int, supposedly stoi converts string to int
             }
-            */
+            
 
             vectorOfMovieRowVectors.push_back(newRowStruct); // Save this struct in the big vector of row structs
 
@@ -190,6 +200,7 @@ int main()
         }
         */
 
+        /* _______________
         // Test loop to print out movie titles along with their genres list
         int howMany = 15;
         for (int increment = 0; increment < howMany; increment++)
@@ -201,6 +212,7 @@ int main()
             }
             cout << endl;
         }
+        */
 
         /*
         cout << endl << "Printing the first " << "all" << " director names...";
