@@ -58,7 +58,7 @@ vector<string> delimitThis (const string &splitThis, char delimiter) {
 int main()
 {
     ifstream inputFile;
-    inputFile.open("./CSV Files/tmdb_5000_credits.csv");
+    inputFile.open("../CSV Files/tmdb_5000_credits.csv");
     string currentLine; // String that stores the current line
     int lineNum = 1; // Int that tracks the current line number
     string colLabels; // String that stores the not-so-useful first line which has the column labels

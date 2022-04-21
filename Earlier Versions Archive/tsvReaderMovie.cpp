@@ -101,7 +101,7 @@ vector<string> convertStringToArray(string convertThis, string conversionType)
 int main()
 {
     ifstream inputFile;
-    inputFile.open("./TSV Files/movies.tsv");
+    inputFile.open("../TSV Files/movies.tsv");
     string currentLine; // String that stores the current line
     int rowNum = 1;     // Int that tracks the current row number
     string colLabels;   // String that stores the not-so-useful first line which has the column labels

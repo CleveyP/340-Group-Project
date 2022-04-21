@@ -140,7 +140,7 @@ string whoIsDirector(string convertThis){
 int main()
 {
     ifstream inputFile;
-    inputFile.open("./TSV Files/credits.tsv");
+    inputFile.open("../TSV Files/credits.tsv");
     string currentLine; // String that stores the current line
     int rowNum = 1;     // Int that tracks the current row number
     string colLabels;   // String that stores the not-so-useful first line which has the column labels
