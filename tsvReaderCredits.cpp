@@ -65,7 +65,9 @@ vector<string> convertStringToArray(string convertThis, string conversionType)
 
             // Find all occurrences of sus string (in this case it's name)
             size_t foundIndex = convertThis.find(susString);
-            while (foundIndex != string::npos) // Continue until there are no more sus strings to be found
+            int stopAfterThisMany = 15; 
+            int currentLengthOfCastArray = 0;
+            while (foundIndex != string::npos &&  currentLengthOfCastArray < stopAfterThisMany) // Continue until there are no more sus strings to be found
             {
                 // cout << "Next found starting index is " << foundIndex << endl; debug line
 
@@ -84,7 +86,8 @@ vector<string> convertStringToArray(string convertThis, string conversionType)
                 foundName.pop_back();                                     // Delete the comma
                 foundName.pop_back();                                     // Delete the quotes
                 //cout << "pushing back: " << foundName << endl; Debug line to output the name being added to the new array
-                newArray.push_back(foundName);                            // Add the completed actor name to the newly forming array
+                newArray.push_back(foundName);  // Add the completed actor name to the newly forming array
+                currentLengthOfCastArray++;   // Increment the counter for how many times this has run by 1 each time so we can stop after say, the first 15 actors are added
                 foundIndex = convertThis.find(susString, foundIndex + 8); // +8 because that's the length of "name\": \"" excluding the escape characters \     "
             }
             return newArray;
@@ -114,7 +117,7 @@ string whoIsDirector(string convertThis){
 
                 // A copy of the found index, which can be modified safely
                 int nextCharIndex = foundIndex;
-                while (nextChar != ',' && nextChar != ']') // A comma marks the end of the actor's name, so we stop there
+                while (nextChar != ',' && nextChar != ']') // A comma marks the end of the director's name, so we stop there
                 {
                     nextChar = convertThis.at(nextCharIndex + 21); // The next char is the next character in the index after the found index in the find() function +21 to get past the found word and the quotes and spaces..
                     directorName.push_back(nextChar);                // Add each char in the string until a quotation is reached, meaning the end of the director name
@@ -124,7 +127,7 @@ string whoIsDirector(string convertThis){
                 directorName.pop_back();        // Delete the quote
                 directorName.pop_back();        // Delete the quote
             }
-            cout << directorName << endl;
+            // cout << directorName << endl; debug line that prints director names
             }
             
             return directorName;
@@ -141,7 +144,7 @@ int main()
     string currentLine; // String that stores the current line
     int rowNum = 1;     // Int that tracks the current row number
     string colLabels;   // String that stores the not-so-useful first line which has the column labels
-    vector<string> currentLineVector;
+    vector<string> currentRowVector;
 
     if (!inputFile)
     { // If there is no input file... (it didn't open) then display an error message
@@ -164,26 +167,26 @@ int main()
             */
 
             getline(inputFile, currentLine);                    // Get the current row from the document
-            currentLineVector = delimitThis(currentLine, '\t'); // Call the delimiter function to split this line up into columns
+            currentRowVector = delimitThis(currentLine, '\t'); // Call the delimiter function to split this line up into columns
 
             // TO DO:
             // check the length of current line vector if length is 1 store title and continue, if length is 2 string find for department to determine if the 1 array is cast or crew
             // store it in the correct one, let other one stay uninitalized empty array
 
             creditsStruct *newRowStruct = new creditsStruct;
-            (*newRowStruct).title = currentLineVector.at(0); // Save the movie title data
+            (*newRowStruct).title = currentRowVector.at(0); // Save the movie title data
 
             // Only store cast data if it exists and it's actually the cast data, checked if it contains "character" which is exclusive to cast
-            if (currentLineVector.size() >= 2 && currentLineVector.at(1).find("character") != std::string::npos)
+            if (currentRowVector.size() >= 2 && currentRowVector.at(1).find("character") != std::string::npos)
             {
-                (*newRowStruct).cast = convertStringToArray(currentLineVector.at(1), "cast"); // Save the movie cast data after is has been converted from a string to array
+                (*newRowStruct).cast = convertStringToArray(currentRowVector.at(1), "cast"); // Save the movie cast data after is has been converted from a string to array
             }
 
             // Only store crew data if it exists and it's actually the crew data (checked by if it contains department which is exclusive to crew, != npos means it's in there somewhere)
-            if (currentLineVector.size() >= 3 && currentLineVector.at(2).find("department") != std::string::npos)
+            if (currentRowVector.size() >= 3 && currentRowVector.at(2).find("department") != std::string::npos)
             {
                 
-                (*newRowStruct).director = whoIsDirector(currentLineVector.at(2)); // Save the director data
+                (*newRowStruct).director = whoIsDirector(currentRowVector.at(2)); // Save the director data
             }
 
             vectorOfRowVectors.push_back(newRowStruct); // Save this struct in the big vector of row structs
@@ -198,7 +201,7 @@ int main()
         // cout << vectorOfRowVectors.at(0)->cast << endl;
         // cout << vectorOfRowVectors.at(0)->crew << endl;
         // Testing printing loop, change increment to however many to print out
-        cout << endl << "Printing the first " << 5 << " movie names...";
+        cout << endl << "Printing the first " << 5 << " movie names..." << endl;
         for (int increment = 0; increment < 5; increment++)
         {
             
@@ -212,6 +215,7 @@ int main()
         cout << vectorOfRowVectors.at(0)->cast.at(i) << endl;
     }
 
+/*
 cout << endl << "Printing the first " << "all" << " director names...";
     // Test loop to print out the first 10 directors
         for (int increment = 0; increment < vectorOfRowVectors.size(); increment++)
@@ -220,7 +224,7 @@ cout << endl << "Printing the first " << "all" << " director names...";
             cout << vectorOfRowVectors.at(increment)->director << endl;
         }
         
-
+    */
     }
 
     return 0;
