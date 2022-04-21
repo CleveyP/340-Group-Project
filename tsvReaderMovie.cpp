@@ -16,7 +16,7 @@ TSV File reader for the movies tsv file
 using namespace std;
 
 // Placeholder struct for movie data
-struct movieStruct
+struct combinedMovieStruct
 {
     string movieTitle = "";     // col 1 movie title
     double revenue = 0;            // col 2 movie revenue
@@ -117,7 +117,7 @@ int main()
         getline(inputFile, currentLine); // stores the first line which has the column labels in it
         // ______________________________________________________________________________________
 
-        vector<movieStruct *> vectorOfMovieRowVectors; // The big vector holding all of the various row structs
+        vector<combinedMovieStruct *> vectorOfMovieRowVectors; // The big vector holding all of the various row structs
         int i = 0;                                     // debugging int to find out which line this might break on
 
         while (!inputFile.eof()) // While not at the end of the file...
@@ -133,7 +133,7 @@ int main()
             // TO DO:
             // CONVERT THIS WHOLE THING TO WORK FOR MOVIES TSV
 
-            movieStruct *newRowStruct = new movieStruct;
+            combinedMovieStruct *newRowStruct = new combinedMovieStruct;
             (*newRowStruct).movieTitle = currentRowVector.at(0); // Save the movie title data
             // cout << "Movie title data saved" << endl;     DEBUG LINE
 

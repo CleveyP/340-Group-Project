@@ -17,56 +17,80 @@ TSV File reader for the movies tsv file
 using namespace std;
 
 // Placeholder struct for movie data
-struct movieStruct
+struct combinedMovieStruct
 {
+    // Data values from movies.csv
     string movieTitle = "";     // col 1 movie title
-    double revenue = 0;            // col 2 movie revenue
+    double revenue = 0;         // col 2 movie revenue
     int budget = 0;             // col 3 movie budget
-    vector<string> genres = {}; // col 4 movie's genres
-    int runtime = 0;
-    int releaseDate = 0;        // col 5 movie's release date TO DO: YEAR ONLY for release date
-    double rating = 0;          // col 6 movie average rating
-    int voteCount = 0;          // col 7 store number of votes towards the rating?
+    vector<string> genres = {}; // col 4 movie's genres in an array
+    int runtime = 0;            // col 5 movie runtime in minutes
+    int releaseDate = 0;        // col 6 movie's release date TO DO: YEAR ONLY for release date
+    double rating = 0;          // col 7 movie average rating
+    int voteCount = 0;          // col 8 store number of votes towards the rating?
+    // __________________________________
+    // Data values from credits.csv
+    vector<string> cast = {}; // col 2 of credits    Stores movie cast array
+    string director = "";     // col 3 of credits    Stores director name
 };
 
-// Test function to split an input line by a given delimiter
+// Struct for storing Credits.tsv data
+// Done now: Converted existing cast and crew into a vector or sring that only has the relevant info
+// FOR CAST: Only actor names, will need to be a vector
+// For CREW: Director name in string form
+struct creditsStruct
+{
+    string title = "";        // col 1    Stores movie title
+    vector<string> cast = {}; // col 2    Stores movie cast array
+    string director = "";     // col 3    Stores director name
+};
+
+// Function to split an input line by a given delimiter
+// Takes an input line, which is being given by getline, and delimits it based on the delimiter given
+// Currently works properly with tab separated values (tsv's)
 vector<string> delimitThis(const string &lineToSplit, char delimiter)
 {
     // cout << "Starting delimiting" << endl;  debug line
-    int currentCol = 1;
+    // Debugging column counter to find out what column this might get stuck on
+    // int currentCol = 1;
     stringstream stringStream(lineToSplit);
-    string currentStringData;
-    vector<string> lineToWordsVector;
+    string currentColumnData;               // String that will hold the current column's data
+    vector<string> vectorFromThisRowsWords; // A vector which will hold all of the columns of this row as separate strings
 
-    while (getline(stringStream, currentStringData, delimiter))
+    while (getline(stringStream, currentColumnData, delimiter)) // While there are still more columns to retrieve..use stringstream to put the column data in the variable
     {
-        lineToWordsVector.push_back(currentStringData); // Append the current string data to the vector made up of the current line
-        currentCol++;
-        // cout << "pushed back" << endl;
-        // cout << currentStringData << endl;
-        // cout << dataValue << endl
-        //     << endl;
-        currentStringData = ""; // Reset the current string data to empty for the next run-through
+        vectorFromThisRowsWords.push_back(currentColumnData); // Append the current column data to the vector made up of the current row
+        // currentCol++;
+        //  cout << "pushed back" << endl;
+        //  cout << currentStringData << endl;
+        //  cout << dataValue << endl
+        //      << endl;
+        currentColumnData = ""; // Reset the current column data storage to empty for the next run-through
     }
-    return lineToWordsVector; // Return the completed vector
+    return vectorFromThisRowsWords; // Return the completed vector
 }
 
-// WIP function to extract only the useful portions of a vector so we don't have all the junk data
+// Function to extract only the useful portions of a vector so we don't have all the junk data
+// convertHis: The string we want to convert to an array
+// conversionType:  a string that identifies which type of string this array is supposed to be
 vector<string> convertStringToArray(string convertThis, string conversionType)
 {
+    // Initialized to empty array, in case this is an empty column, it will stay that way
+    // An empty array which will eventually hold the names we want to extract and will be returned
     vector<string> newArray = {};
-    // Takes in a string to convert to an array
-    // and a string that identifies which type of string this array is supposed to be
-    if (convertThis.size() > 0)
-    { // Failsafe to only run the function if the given string is not empty
-        if (conversionType == "cast" || conversionType == "genre")
-        {
-            string susString = "name\": \""; // Searching for this
-            vector<string> newArray = {};    // An empty array which will eventually hold the actors names and will be returned
 
-            // Find all occurrences of sus string (in this case it's name)
+
+    if (convertThis.size() > 0) // Failsafe to only run the function if the given string is not empty
+    {
+        if (conversionType == "cast" || conversionType == "genre") // For cast and genre vector conversions...
+        {
+            string susString = "name\": \""; // String we want to search for in the vector
+
+            // foundIndex's initial value will be the index of the first occurance of the string we're looking for
             size_t foundIndex = convertThis.find(susString);
-            while (foundIndex != string::npos) // Continue until there are no more sus strings to be found
+            // Find all occurrences of sus string in the vector in the while loop
+
+            while (foundIndex != string::npos) // Continue until there are no more sus strings to be found (the one we're looking for)
             {
                 // cout << "Next found starting index is " << foundIndex << endl; debug line
 
@@ -78,7 +102,7 @@ vector<string> convertStringToArray(string convertThis, string conversionType)
                 int nextCharIndex = foundIndex;
                 while (nextChar != ',' && nextChar != ']') // A comma marks the end of the actor or genre name, so we stop there
                 {
-                    nextChar = convertThis.at(nextCharIndex + 8); // The next char is the next character after the index found in the find() function +8 to get past the found word and the quotes and spaces..
+                    nextChar = convertThis.at(nextCharIndex + 8); // The first character of the word we want is the next character after the index returned from the find() function +8 to get past the found word and the quotes and spaces..
                     foundName.push_back(nextChar);                // Add each char in the string until a quotation is reached, meaning the end of the actor or genre name
                     nextCharIndex++;                              // Increment the current index by 1 to get each subsequent letter in the actor or genre name, if there are more
                 }
@@ -118,8 +142,8 @@ int main()
         getline(inputFile, currentLine); // stores the first line which has the column labels in it
         // ______________________________________________________________________________________
 
-        vector<movieStruct *> vectorOfMovieRowVectors; // The big vector holding all of the various row structs
-        int i = 0;                                     // debugging int to find out which line this might break on
+        vector<combinedMovieStruct *> vectorOfMovieRowVectors; // The big vector holding all of the various row structs
+        int i = 0;                                             // debugging int to find out which line this might break on
 
         while (!inputFile.eof()) // While not at the end of the file...
         {
@@ -128,21 +152,20 @@ int main()
             cout << "while loop" << endl;
             */
 
-            getline(inputFile, currentLine);                    // Get the current row from the document
+            getline(inputFile, currentLine);                   // Get the current row from the document
             currentRowVector = delimitThis(currentLine, '\t'); // Call the delimiter function to split this line up into columns
 
             // TO DO:
             // CONVERT THIS WHOLE THING TO WORK FOR MOVIES TSV
 
-            movieStruct *newRowStruct = new movieStruct;
+            combinedMovieStruct *newRowStruct = new combinedMovieStruct;
             (*newRowStruct).movieTitle = currentRowVector.at(0); // Save the movie title data
             // cout << "Movie title data saved" << endl;     DEBUG LINE
 
-
-            //cout << currentLineVector.at(0) << "  Revenue: " << currentLineVector.at(1) << endl;
+            // cout << currentLineVector.at(0) << "  Revenue: " << currentLineVector.at(1) << endl;
             (*newRowStruct).revenue = std::stod(currentRowVector.at(1)); // Save the movie revenue data, supposedly stoi converts string to int
 
-            //cout << currentLineVector.at(0) << "  Budget: " << currentLineVector.at(2) << endl;
+            // cout << currentLineVector.at(0) << "  Budget: " << currentLineVector.at(2) << endl;
             (*newRowStruct).budget = std::stoi(currentRowVector.at(2)); // Save the movie budget data, supposedly stoi converts string to int
 
             // Only store genre data if it exists and it's actually the genre data, checked if it contains "[{\"" which is exclusive to genre within the movies.tsv file
@@ -154,31 +177,33 @@ int main()
             // __________________________________________________________________________
 
             // If there is a release date (tested by having a length greater than or equal to 4)
-            
-            if(currentRowVector.at(4).size() >= 4){
-            //cout << currentLineVector.at(0) << "  Release Date: " << std::stoi(currentLineVector.at(4).substr(0, 4)) << endl; 
-            (*newRowStruct).releaseDate = std::stoi(currentRowVector.at(4).substr(0, 4)); // Save the first 4 numbers of release date, supposedly stoi converts string to int
+
+            if (currentRowVector.at(4).size() >= 4)
+            {
+                // cout << currentLineVector.at(0) << "  Release Date: " << std::stoi(currentLineVector.at(4).substr(0, 4)) << endl;
+                (*newRowStruct).releaseDate = std::stoi(currentRowVector.at(4).substr(0, 4)); // Save the first 4 numbers of release date, supposedly stoi converts string to int
             }
-            
+
             // Movie runtime is usually longer than 0 minutes so check if that's true first
-            if(currentRowVector.at(5).size() >= 1){
-            //cout << currentLineVector.at(0) << "  Runtime: " << std::stoi(currentLineVector.at(5)) << endl; 
-            (*newRowStruct).runtime = std::stoi(currentRowVector.at(5).substr(0, 5)); // Save the first 4 numbers of release date, supposedly stoi converts string to int
+            if (currentRowVector.at(5).size() >= 1)
+            {
+                // cout << currentLineVector.at(0) << "  Runtime: " << std::stoi(currentLineVector.at(5)) << endl;
+                (*newRowStruct).runtime = std::stoi(currentRowVector.at(5).substr(0, 5)); // Save the first 4 numbers of release date, supposedly stoi converts string to int
             }
 
             // If there is a rating value, it should have a length greater than or equal to 1, if so, store it
-            if(currentRowVector.at(6).size() >= 1){
-            //cout << currentLineVector.at(0) << "  Rating: " << std::stod(currentLineVector.at(6)) << endl;
-            (*newRowStruct).rating = std::stod(currentRowVector.at(6)); // Save the rating as a double, supposedly stod converts string to double
+            if (currentRowVector.at(6).size() >= 1)
+            {
+                // cout << currentLineVector.at(0) << "  Rating: " << std::stod(currentLineVector.at(6)) << endl;
+                (*newRowStruct).rating = std::stod(currentRowVector.at(6)); // Save the rating as a double, supposedly stod converts string to double
             }
-            
 
             // If there is a vote count value, it should have a length greater than or equal to 1, if so, store it
-            if(currentRowVector.at(7).size() >= 1){
-            //cout << currentLineVector.at(0) << "  Vote Count: " << std::stoi(currentLineVector.at(7)) << endl; 
-            (*newRowStruct).voteCount = std::stoi(currentRowVector.at(7)); // Save the vote count as int, supposedly stoi converts string to int
+            if (currentRowVector.at(7).size() >= 1)
+            {
+                // cout << currentLineVector.at(0) << "  Vote Count: " << std::stoi(currentLineVector.at(7)) << endl;
+                (*newRowStruct).voteCount = std::stoi(currentRowVector.at(7)); // Save the vote count as int, supposedly stoi converts string to int
             }
-            
 
             vectorOfMovieRowVectors.push_back(newRowStruct); // Save this struct in the big vector of row structs
 
@@ -191,7 +216,7 @@ int main()
         // cout << vectorOfRowVectors.at(0)->title << endl;
         // cout << vectorOfRowVectors.at(0)->cast << endl;
         // cout << vectorOfRowVectors.at(0)->crew << endl;
-        
+
         // Testing printing loop, change increment to however many to print out
         /*
         int howManYEE = 20;
@@ -206,9 +231,7 @@ int main()
         bool testBool = (avatar > pirates);
         cout << endl << "TestBool result says: " << testBool << endl;
         */
-        
 
-        
         // Test loop to print out movie titles along with their genres list
         int howMany = 15;
         for (int increment = 0; increment < howMany; increment++)
@@ -220,7 +243,6 @@ int main()
             }
             cout << endl;
         }
-        
 
         /*
         cout << endl << "Printing the first " << "all" << " director names...";
