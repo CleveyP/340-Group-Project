@@ -1,3 +1,12 @@
+#include "functions.h"
+#include <iostream>
+#include <fstream>
+#include <sstream>
+#include <string>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
 class Actor{
     public:
     string theName;
@@ -30,7 +39,7 @@ void add_actor(vector<string> list, vector<Actor> & inputs){
     }
 }
 
-void order(vector<Actor> inputs) {
+void order(vector<Actor> & inputs) {
     vector<Actor> results;
     Actor helping;
     int highest = -1;
@@ -50,9 +59,30 @@ void order(vector<Actor> inputs) {
         highest = -1;
         position = -1;
     }
-    //only used to show the code's working
-    for (int i = 0; i < results.size(); i++){
-        cout << "The name is " << results.at(i).theName;
-        cout << " and their appearances are " << results.at(i).theAppearances << endl;
-    }
+    inputs.erase(inputs.begin(), inputs.end());
+    inputs = results;
 }
+
+/* For reference
+int main()
+{
+    vector <string> list;
+    vector<Actor> inputs;
+    list.push_back("Azi");
+    list.push_back("Cleveland");
+    list.push_back("ddanime");
+    list.push_back("The Senate");
+    list.push_back("Azi");
+    list.push_back("Yueling Liu");
+    list.push_back("ddanime");
+    list.push_back("CLTurtle");
+    list.push_back("Azi");
+    add_actor(list, inputs);
+    order(inputs);
+    //only used to show the code's working
+    for (int i = 0; i < inputs.size(); i++){
+        cout << "The name is " << inputs.at(i).theName;
+        cout << " and their appearances are " << inputs.at(i).theAppearances << endl;
+    }
+    return 0;
+}*/
