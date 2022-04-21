@@ -1,5 +1,10 @@
-// Original from GeeksForGeeks
+
+// Stephen Martel
+// 4/19/2022
+
+// Original (pre-modificiation) from GeeksForGeeks
 // Modified to be a loop to work for our project
+// After a lot of trial and error it extracts it how we want it to
 
 #include <iostream>
 #include <string>
