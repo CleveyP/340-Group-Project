@@ -15,16 +15,29 @@ using namespace std;
 
 
 // Quick comparison of two revenue values for use in the sort by High to Low revenue sort function
-bool compareRevenue(combinedMovieStruct* &struct1Rev, combinedMovieStruct* &struct2Rev)
+bool greaterThanCompare(combinedMovieStruct* &struct1Rev, combinedMovieStruct* &struct2Rev)
 {
     return ((struct1Rev->revenue) > (struct2Rev->revenue));
 }
 
+// Quick comparison of two revenue values for use in the sort by Low to High revenue sort function
+bool lessThanCompare(combinedMovieStruct* &struct1Rev, combinedMovieStruct* &struct2Rev)
+{
+    return ((struct1Rev->revenue) < (struct2Rev->revenue));
+}
+
 vector<combinedMovieStruct *> sortHighToLowRevenue(vector<combinedMovieStruct *> inputVector) {
-    // Create a new struct which will be the sorted version returned at the end
-    vector<combinedMovieStruct *> sortedByRevenue;
+    // Calls the sort function with starting point of the beginning of the vector of structs and ending at the end of it, with a sorting type of high to low (descending)
+    sort(inputVector.begin(), inputVector.end(), greaterThanCompare);
 
-    sort(inputVector.begin(), inputVector.end(), compareRevenue);
+    // Return the sorted vector of structs'
+    return inputVector;
+}
 
+vector<combinedMovieStruct *> sortLowToHighRevenue(vector<combinedMovieStruct *> inputVector) {
+    // Calls the sort function with starting point of the beginning of the vector of structs and ending at the end of it, with a sorting type of low to high (ascending)
+    sort(inputVector.begin(), inputVector.end(), lessThanCompare);
+
+    // Return the sorted vector of structs'
     return inputVector;
 }

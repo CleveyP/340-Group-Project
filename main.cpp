@@ -41,11 +41,13 @@ int main()
     vector<Actor> resultOfSort = sortedActorFreqVec(megaCastList);
     printFreqVec(resultOfSort);
 
-    vector<combinedMovieStruct *> ninetiesMoviesVecByRevenue = sortHighToLowRevenue(ninetiesMoviesVec);
+    vector<combinedMovieStruct *> ninetiesMoviesVecByRevenue = sortLowToHighRevenue(ninetiesMoviesVec);
     for (size_t currentIndex = 0; currentIndex < ninetiesMoviesVecByRevenue.size(); currentIndex++)
     {
         cout << fixed << setprecision(0) << ninetiesMoviesVecByRevenue.at(currentIndex)->movieTitle << ": " << ninetiesMoviesVecByRevenue.at(currentIndex)->revenue << endl;
     }
+
+
 
 
 /*
