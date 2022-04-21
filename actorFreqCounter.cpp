@@ -1,5 +1,5 @@
 
-// Stephen Martel + Ronnie Huang
+// Ronnie Huang + Stephen Martel
 // Original copied over from Ronnie Huang's discord messages and then modified
 // 4/21/2022
 
@@ -85,30 +85,31 @@ void printFreqVec(vector<Actor> actorVec){
 // Then extracts each actor from the input cast vector and adds them to the vector of actor types
 // Then sorts that populated vector of actor types by frequency value, highest first 
 // Then returns the sorted vector
-vector<Actor> sortedActorFreqVec(vector<string> inputCastVec){
+vector<Actor> sortedActorFreqVec(vector<string> inputMegaCastVec){
     // Empty vector of actors to store the results of add_Actors
     vector<Actor> actorFreqVec;
-    add_Actors(inputCastVec, actorFreqVec);
+    add_Actors(inputMegaCastVec, actorFreqVec);
     sortHighToLowFreq(actorFreqVec);
     return actorFreqVec;
 }
 
+  // Old main function for testing purposes.
 int main()
 {
 
     //This contains all the names of the actors, should be removed later
-    vector <string> inputCastVec;
-    inputCastVec.push_back("Azi");
-    inputCastVec.push_back("Cleveland");
-    inputCastVec.push_back("ddanime");
-    inputCastVec.push_back("The Senate");
-    inputCastVec.push_back("Azi");
-    inputCastVec.push_back("Yueling Liu");
-    inputCastVec.push_back("ddanime");
-    inputCastVec.push_back("CLTurtle");
-    inputCastVec.push_back("Azi");
+    vector <string> inputMegaCastVec;
+    inputMegaCastVec.push_back("Azi");
+    inputMegaCastVec.push_back("Cleveland");
+    inputMegaCastVec.push_back("ddanime");
+    inputMegaCastVec.push_back("The Senate");
+    inputMegaCastVec.push_back("Azi");
+    inputMegaCastVec.push_back("Yueling Liu");
+    inputMegaCastVec.push_back("ddanime");
+    inputMegaCastVec.push_back("CLTurtle");
+    inputMegaCastVec.push_back("Azi");
 
-    vector<Actor> resultOfSort = sortedActorFreqVec(inputCastVec);
+    vector<Actor> resultOfSort = sortedActorFreqVec(inputMegaCastVec);
     printFreqVec(resultOfSort);
 
     return 0;
