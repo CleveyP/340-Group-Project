@@ -25,7 +25,7 @@ struct combinedMovieStruct
     int budget = 0;             // col 3 movie budget
     vector<string> genres = {}; // col 4 movie's genres in an array
     int runtime = 0;            // col 5 movie runtime in minutes
-    int releaseDate = 0;        // col 6 movie's release date TO DO: YEAR ONLY for release date
+    int releaseDate = 0;        // col 6 movie's release date
     double rating = 0;          // col 7 movie average rating
     int voteCount = 0;          // col 8 store number of votes towards the rating?
     // __________________________________
