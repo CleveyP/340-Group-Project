@@ -16,7 +16,7 @@ TSV File reader for the movies tsv file
 
 using namespace std;
 
-// Placeholder struct for movie data
+// Struct which holds the movie data from both movies.tsv and credits.tsv
 struct combinedMovieStruct
 {
     // Data values from movies.csv
@@ -29,7 +29,9 @@ struct combinedMovieStruct
     double rating = 0;          // col 7 movie average rating
     int voteCount = 0;          // col 8 store number of votes towards the rating?
     // __________________________________
+
     // Data values from credits.csv
+    // Original credits struct has movie title but it'd be a duplicate of the title from movies.tsv so exclude it here
     vector<string> cast = {}; // col 2 of credits    Stores movie cast array
     string director = "";     // col 3 of credits    Stores director name
 };
@@ -79,7 +81,6 @@ vector<string> convertStringToArray(string convertThis, string conversionType)
     // An empty array which will eventually hold the names we want to extract and will be returned
     vector<string> newArray = {};
 
-
     if (convertThis.size() > 0) // Failsafe to only run the function if the given string is not empty
     {
         if (conversionType == "cast" || conversionType == "genre") // For cast and genre vector conversions...
@@ -88,19 +89,24 @@ vector<string> convertStringToArray(string convertThis, string conversionType)
 
             // foundIndex's initial value will be the index of the first occurance of the string we're looking for
             size_t foundIndex = convertThis.find(susString);
-            // Find all occurrences of sus string in the vector in the while loop
+            // Find all remaining occurrences of sus string in the vector in the while loop
 
-            while (foundIndex != string::npos) // Continue until there are no more sus strings to be found (the one we're looking for)
+            // Two variables to help us stop after storing a certain number of actors (stopAfterThisMany)
+            int stopAfterThisMany = 15; 
+            int currentLengthOfCastArray = 0; // Starts at 0 because the actor array starts empty
+
+            // Added && condition so it stops after the actor array reaches the size specified above (so only the first 15 actors for example)
+            while (foundIndex != string::npos &&  currentLengthOfCastArray < stopAfterThisMany) // Continue until there are no more sus strings to be found (the one we're looking for)
             {
                 // cout << "Next found starting index is " << foundIndex << endl; debug line
 
-                // A couple variables with placeholder values,
+                // A couple variables with placeholder values, used to save the name that is found at the index
                 char nextChar = 'a';
                 string foundName = "";
 
                 // A copy of the found index, which can be modified safely
                 int nextCharIndex = foundIndex;
-                while (nextChar != ',' && nextChar != ']') // A comma marks the end of the actor or genre name, so we stop there
+                while (nextChar != ',' && nextChar != ']') // A comma or ] marks the end of the actor or genre name, so we stop there
                 {
                     nextChar = convertThis.at(nextCharIndex + 8); // The first character of the word we want is the next character after the index returned from the find() function +8 to get past the found word and the quotes and spaces..
                     foundName.push_back(nextChar);                // Add each char in the string until a quotation is reached, meaning the end of the actor or genre name
@@ -115,12 +121,12 @@ vector<string> convertStringToArray(string convertThis, string conversionType)
 
                 // cout << "pushing back: " << foundName << endl; Debug line to output the name being added to the new array
                 newArray.push_back(foundName);                            // Add the completed actor or genre name to the newly forming array
+                currentLengthOfCastArray++;   // Increment the counter for how many times this has run by 1 each time so we can stop after say, the first 15 actors are added
                 foundIndex = convertThis.find(susString, foundIndex + 8); // +8 because that's the length of "name\": \"" excluding the escape characters \     "
-            }
-            return newArray;
-        }
-    }
-    return newArray;
+            } // end while loop
+        }// end if statement of conversion type
+    }// end if size>0 if statement
+    return newArray; // Return the array of strings once done with any changes
 }
 
 int main()
@@ -129,8 +135,9 @@ int main()
     inputFile.open("./TSV Files/movies.tsv");
     string currentLine; // String that stores the current line
     int rowNum = 1;     // Int that tracks the current row number
-    string colLabels;   // String that stores the not-so-useful first line which has the column labels
     vector<string> currentRowVector;
+    vector<combinedMovieStruct *> vectorOfMovieRowVectors; // The big vector holding all of the structs containing the data from each row of the input files
+
 
     if (!inputFile)
     { // If there is no input file... (it didn't open) then display an error message
@@ -138,12 +145,11 @@ int main()
         return -1;
     }
     else
-    {                                    // If the file opened successfully
-        getline(inputFile, currentLine); // stores the first line which has the column labels in it
+    {   // If the file opened successfully
+        getline(inputFile, currentLine); // Bypass the first line which has the column labels in it
         // ______________________________________________________________________________________
 
-        vector<combinedMovieStruct *> vectorOfMovieRowVectors; // The big vector holding all of the various row structs
-        int i = 0;                                             // debugging int to find out which line this might break on
+        int runCounter = 0;                                             // debugging int to find out which line this might break on
 
         while (!inputFile.eof()) // While not at the end of the file...
         {
@@ -208,7 +214,7 @@ int main()
             vectorOfMovieRowVectors.push_back(newRowStruct); // Save this struct in the big vector of row structs
 
             // cout << i << endl; // Debugging line to find out how many times this runs all the way to the end of this loop
-            i++;
+            runCounter++;
         }
 
         cout << endl;
