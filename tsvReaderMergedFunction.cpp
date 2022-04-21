@@ -169,7 +169,9 @@ string whoIsDirector(string extractFromThisString)
     return directorName; // Return the finished director name string, either empty if none was found, or a proper name if one was
 }
 
-int main()
+// Converted existing main into a function
+// This will return the resulting vector of structs (each struct is data from a movie row)
+vector<combinedMovieStruct *> createVectorOfStructs()
 {
     ifstream inputFile;
     inputFile.open("./TSV Files/movies.tsv");
@@ -182,7 +184,7 @@ int main()
     if (!inputFile)
     { // If there is no input file... (it didn't open) then display an error message
         cout << "The movies file did not open correctly, exiting the program";
-        return -1;
+        return vectorOfMovieRowVectors;
     }
     else
     {                                    // If the file opened successfully
@@ -279,7 +281,7 @@ int main()
         if (!inputFile)
         { // If there is no input file... (it didn't open) then display an error message
             cout << "The credits file did not open correctly, exiting the program";
-            return -1;
+            return vectorOfMovieRowVectors;
         }
         else
         {                                    // If the file opened successfully
@@ -372,8 +374,9 @@ int main()
             }
             */
 
+            /*
             // Test loop to print out movie titles along with their actors list
-            int howMany = 15;
+            int howMany = 400;
             for (int outerCount = 0; outerCount < howMany; outerCount++)
             {
 
@@ -381,7 +384,8 @@ int main()
                 cout << vectorOfMovieRowVectors.at(outerCount)->movieTitle << endl;
 
                 // Print director name
-                cout << "Director: " << vectorOfMovieRowVectors.at(outerCount)->director << endl << endl;
+                cout << "Director: " << vectorOfMovieRowVectors.at(outerCount)->director << endl
+                     << endl;
 
                 // Print genres
                 cout << "Genres: ";
@@ -392,17 +396,16 @@ int main()
                 cout << endl;
 
                 // Print cast names
-                cout << endl << "Cast: " << endl;
+                cout << endl
+                     << "Cast: " << endl;
                 for (int i = 0; i < vectorOfMovieRowVectors.at(outerCount)->cast.size(); i++)
                 {
                     cout << vectorOfMovieRowVectors.at(outerCount)->cast.at(i) << endl;
                 }
                 cout << endl;
-                
-                
-            
             }
-
+            */
+           
             /*
             // Test loop to print out movie titles along with their director's name
             howMany = 15;
@@ -424,6 +427,7 @@ int main()
                     */
         }
 
-        return 0;
+        return vectorOfMovieRowVectors; // Return the completed vector of structs once done
     }
-}
+} // end of vector of structs creation function
+
