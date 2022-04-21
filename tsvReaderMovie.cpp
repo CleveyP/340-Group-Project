@@ -105,7 +105,7 @@ int main()
     string currentLine; // String that stores the current line
     int rowNum = 1;     // Int that tracks the current row number
     string colLabels;   // String that stores the not-so-useful first line which has the column labels
-    vector<string> currentLineVector;
+    vector<string> currentRowVector;
 
     if (!inputFile)
     { // If there is no input file... (it didn't open) then display an error message
@@ -128,54 +128,54 @@ int main()
             */
 
             getline(inputFile, currentLine);                    // Get the current row from the document
-            currentLineVector = delimitThis(currentLine, '\t'); // Call the delimiter function to split this line up into columns
+            currentRowVector = delimitThis(currentLine, '\t'); // Call the delimiter function to split this line up into columns
 
             // TO DO:
             // CONVERT THIS WHOLE THING TO WORK FOR MOVIES TSV
 
             movieStruct *newRowStruct = new movieStruct;
-            (*newRowStruct).movieTitle = currentLineVector.at(0); // Save the movie title data
+            (*newRowStruct).movieTitle = currentRowVector.at(0); // Save the movie title data
             // cout << "Movie title data saved" << endl;     DEBUG LINE
 
 
             //cout << currentLineVector.at(0) << "  Revenue: " << currentLineVector.at(1) << endl;
-            (*newRowStruct).revenue = std::stod(currentLineVector.at(1)); // Save the movie revenue data, supposedly stoi converts string to int
+            (*newRowStruct).revenue = std::stod(currentRowVector.at(1)); // Save the movie revenue data, supposedly stoi converts string to int
 
             //cout << currentLineVector.at(0) << "  Budget: " << currentLineVector.at(2) << endl;
-            (*newRowStruct).budget = std::stoi(currentLineVector.at(2)); // Save the movie budget data, supposedly stoi converts string to int
+            (*newRowStruct).budget = std::stoi(currentRowVector.at(2)); // Save the movie budget data, supposedly stoi converts string to int
 
             // Only store genre data if it exists and it's actually the genre data, checked if it contains "[{\"" which is exclusive to genre within the movies.tsv file
-            if (currentLineVector.size() >= 4 && currentLineVector.at(3).find("[{\"") != std::string::npos)
+            if (currentRowVector.size() >= 4 && currentRowVector.at(3).find("[{\"") != std::string::npos)
             {
                 // cout << "Before saving" << endl; DEBUG LINE
-                (*newRowStruct).genres = convertStringToArray(currentLineVector.at(3), "genre"); // Save the movie genre data after is has been converted from a string to array
+                (*newRowStruct).genres = convertStringToArray(currentRowVector.at(3), "genre"); // Save the movie genre data after is has been converted from a string to array
             }
             // __________________________________________________________________________
 
             // If there is a release date (tested by having a length greater than or equal to 4)
             
-            if(currentLineVector.at(4).size() >= 4){
+            if(currentRowVector.at(4).size() >= 4){
             //cout << currentLineVector.at(0) << "  Release Date: " << std::stoi(currentLineVector.at(4).substr(0, 4)) << endl; 
-            (*newRowStruct).releaseDate = std::stoi(currentLineVector.at(4).substr(0, 4)); // Save the first 4 numbers of release date, supposedly stoi converts string to int
+            (*newRowStruct).releaseDate = std::stoi(currentRowVector.at(4).substr(0, 4)); // Save the first 4 numbers of release date, supposedly stoi converts string to int
             }
             
             // Movie runtime is usually longer than 0 minutes so check if that's true first
-            if(currentLineVector.at(5).size() >= 1){
+            if(currentRowVector.at(5).size() >= 1){
             //cout << currentLineVector.at(0) << "  Runtime: " << std::stoi(currentLineVector.at(5)) << endl; 
-            (*newRowStruct).runtime = std::stoi(currentLineVector.at(5).substr(0, 5)); // Save the first 4 numbers of release date, supposedly stoi converts string to int
+            (*newRowStruct).runtime = std::stoi(currentRowVector.at(5).substr(0, 5)); // Save the first 4 numbers of release date, supposedly stoi converts string to int
             }
 
             // If there is a rating value, it should have a length greater than or equal to 1, if so, store it
-            if(currentLineVector.at(6).size() >= 1){
+            if(currentRowVector.at(6).size() >= 1){
             //cout << currentLineVector.at(0) << "  Rating: " << std::stod(currentLineVector.at(6)) << endl;
-            (*newRowStruct).rating = std::stod(currentLineVector.at(6)); // Save the rating as a double, supposedly stod converts string to double
+            (*newRowStruct).rating = std::stod(currentRowVector.at(6)); // Save the rating as a double, supposedly stod converts string to double
             }
             
 
             // If there is a vote count value, it should have a length greater than or equal to 1, if so, store it
-            if(currentLineVector.at(7).size() >= 1){
+            if(currentRowVector.at(7).size() >= 1){
             //cout << currentLineVector.at(0) << "  Vote Count: " << std::stoi(currentLineVector.at(7)) << endl; 
-            (*newRowStruct).voteCount = std::stoi(currentLineVector.at(7)); // Save the vote count as int, supposedly stoi converts string to int
+            (*newRowStruct).voteCount = std::stoi(currentRowVector.at(7)); // Save the vote count as int, supposedly stoi converts string to int
             }
             
 
