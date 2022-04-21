@@ -70,10 +70,12 @@ void sortHighToLowFreq(vector<Actor> & inputVector) {
  // Also changed the print statements output and made them conditional
 void printFreqVec(vector<Actor> actorVec){
     for (int i = 0; i < actorVec.size(); i++){
+        /* Singular appearances were clogging up the log
         if(actorVec.at(i).frequency == 1){ // Print statement for a singular appearance
             cout << actorVec.at(i).actorName << " starred in: " << actorVec.at(i).frequency << " film" << endl;
         }
-        else if(actorVec.at(i).frequency > 1){ // Print statement for multiple appearances
+        */
+        if(actorVec.at(i).frequency > 1){ // Print statement for multiple appearances
             cout << actorVec.at(i).actorName << " starred in: " << actorVec.at(i).frequency << " films" << endl;
         }
         

@@ -28,6 +28,7 @@ int main()
     // Create a vector of structs consisting of only movies within the year range 1990 - 1999
     vector<combinedMovieStruct *> ninetiesMoviesVec = limitedYearsStructVec(primaryStructVector, 1990, 1999);
 
+    /* Earlier testing
     // Create the list of all actors in the above nineties movies struct vector
     vector<string> megaCastList = constructMegaCastList(ninetiesMoviesVec);
 
@@ -41,20 +42,35 @@ int main()
     vector<Actor> resultOfSort = sortedActorFreqVec(megaCastList);
     printFreqVec(resultOfSort);
 
-    /* Previous revenue sorting testing
+    // Previous revenue sorting testing
     vector<combinedMovieStruct *> ninetiesMoviesVecByRevenue = ascendingRevenue(ninetiesMoviesVec);
     for (size_t currentIndex = 0; currentIndex < ninetiesMoviesVecByRevenue.size(); currentIndex++)
     {
         cout << fixed << setprecision(0) << ninetiesMoviesVecByRevenue.at(currentIndex)->movieTitle << ": " << ninetiesMoviesVecByRevenue.at(currentIndex)->revenue << endl;
     }
+
     */
 
+    vector<combinedMovieStruct *> ninetiesMoviesVecByRevenue = descendingRevenue(ninetiesMoviesVec);
+    
+
+    // Resize the 90's movies by revenue to only be the first 20 movies in that vector
+    // Then build a cast list out of all actors in those top 20 movies by revenue
+    // Then sort that list by frequency
+    // Then print out that sorted list
+    ninetiesMoviesVecByRevenue.resize(30);
+    vector<string> ninetiesCastList = constructMegaCastList(ninetiesMoviesVecByRevenue);
+    vector<Actor> sortedNinetiesCast = sortedActorFreqVec(ninetiesCastList);
+    printFreqVec(sortedNinetiesCast);
+    
+
+   /* Profit sorting testing
     vector<combinedMovieStruct *> ninetiesMoviesVecByRevenue = descendingProfit(ninetiesMoviesVec);
     for (size_t currentIndex = 0; currentIndex < ninetiesMoviesVecByRevenue.size(); currentIndex++)
     {
         cout << fixed << setprecision(0) << ninetiesMoviesVecByRevenue.at(currentIndex)->movieTitle << ": " << (ninetiesMoviesVecByRevenue.at(currentIndex)->revenue - ninetiesMoviesVecByRevenue.at(currentIndex)->budget) << endl;
     }
-
+    */
 
 
 /*

@@ -208,7 +208,7 @@ vector<string> constructMegaCastList(vector<combinedMovieStruct *> structVec)
             megaCastList.push_back(structVec.at(primaryIndex)->cast.at(castIndex));
         }
     }
-    cout << "mega cast list returned" << endl;
+    //cout << "mega cast list returned" << endl; debug line
     return megaCastList;
 }
 
