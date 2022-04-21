@@ -25,8 +25,16 @@ int main()
     }
     else{
         //Not functioning correctly, only printing out "movie_id,title,cast,crew"
+        vector<string> columns;
         string fileNum1;
-        fileIn >> fileNum1;
+        for (int i = 0; i < 99; i++) {
+            fileIn >> fileNum1; 
+            cout << fileNum1 << endl;
+
+            columns.push_back(fileNum1);
+            cout << "Col: " << columns.at(i) << endl;
+        }
+        
         cout << fileNum1 << endl;
     }
     return 0;
