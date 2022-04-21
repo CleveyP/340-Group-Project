@@ -36,6 +36,9 @@ int main()
         cout << ninetiesMoviesVec.at(currentIndex)->movieTitle << ": " << ninetiesMoviesVec.at(currentIndex)->releaseDate << endl;
     }
     
+    // Print the frequency list of all actors within the year range above
+    vector<Actor> resultOfSort = sortedActorFreqVec(megaCastList);
+    printFreqVec(resultOfSort);
 
 
 /*
