@@ -15,8 +15,9 @@ New main file for consolidating the existing and upcoming functions into one mai
 
 using namespace std;
 
-#include "tsvReaderMergedFunction.cpp"  // Include the way to convert the database files into a usable vector of structs
 #include "actorFreqCounter.cpp"
+#include "additionalSorting.cpp" // Additional sorting also includes tsvReaderMergedFunction: which is the way to convert the database files into a usable vector of structs
+
 
 int main()
 {
@@ -39,6 +40,12 @@ int main()
     // Print the frequency list of all actors within the year range above
     vector<Actor> resultOfSort = sortedActorFreqVec(megaCastList);
     printFreqVec(resultOfSort);
+
+    vector<combinedMovieStruct *> ninetiesMoviesVecByRevenue = sortHighToLowRevenue(ninetiesMoviesVec);
+    for (size_t currentIndex = 0; currentIndex < ninetiesMoviesVecByRevenue.size(); currentIndex++)
+    {
+        cout << fixed << setprecision(0) << ninetiesMoviesVecByRevenue.at(currentIndex)->movieTitle << ": " << ninetiesMoviesVecByRevenue.at(currentIndex)->revenue << endl;
+    }
 
 
 /*
