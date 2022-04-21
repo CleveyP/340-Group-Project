@@ -192,6 +192,7 @@ int main()
         // cout << vectorOfRowVectors.at(0)->crew << endl;
         
         // Testing printing loop, change increment to however many to print out
+        /*
         int howManYEE = 20;
         cout << endl << "Printing the first " << howManYEE << " movie revenues..." << endl;
         for (int increment = 0; increment < howManYEE; increment++)
@@ -203,22 +204,22 @@ int main()
         double pirates = vectorOfMovieRowVectors.at(1)->revenue;
         bool testBool = (avatar > pirates);
         cout << endl << "TestBool result says: " << testBool << endl;
-        
+        */
         
 
-        /* _______________
+        
         // Test loop to print out movie titles along with their genres list
         int howMany = 15;
         for (int increment = 0; increment < howMany; increment++)
         {
             cout << vectorOfMovieRowVectors.at(increment)->movieTitle << endl;
-            for (int i = 0; i < vectorOfMovieRowVectors.at(0)->genres.size(); i++)
+            for (int i = 0; i < vectorOfMovieRowVectors.at(increment)->genres.size(); i++)
             {
-                cout << vectorOfMovieRowVectors.at(0)->genres.at(i) << endl;
+                cout << vectorOfMovieRowVectors.at(increment)->genres.at(i) << endl;
             }
             cout << endl;
         }
-        */
+        
 
         /*
         cout << endl << "Printing the first " << "all" << " director names...";
