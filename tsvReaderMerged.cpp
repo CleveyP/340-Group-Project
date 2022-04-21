@@ -177,6 +177,7 @@ int main()
     int rowNum = 1;     // Int that tracks the current row number
     vector<string> currentRowVector;
     vector<combinedMovieStruct *> vectorOfMovieRowVectors; // The big vector holding all of the structs containing the data from each row of the input files
+    // Needs the pointer for the vector type  struct * or else it doesn't work
 
     if (!inputFile)
     { // If there is no input file... (it didn't open) then display an error message
@@ -357,6 +358,7 @@ int main()
             cout << endl << "TestBool result says: " << testBool << endl;
             */
 
+            /*
             // Test loop to print out movie titles along with their genres list
             int howMany = 15;
             for (int increment = 0; increment < howMany; increment++)
@@ -368,19 +370,40 @@ int main()
                 }
                 cout << endl;
             }
+            */
 
             // Test loop to print out movie titles along with their actors list
-            howMany = 15;
+            int howMany = 15;
             for (int outerCount = 0; outerCount < howMany; outerCount++)
             {
+
+                // Print movie titles
                 cout << vectorOfMovieRowVectors.at(outerCount)->movieTitle << endl;
+
+                // Print director name
+                cout << "Director: " << vectorOfMovieRowVectors.at(outerCount)->director << endl << endl;
+
+                // Print genres
+                cout << "Genres: ";
+                for (int i = 0; i < vectorOfMovieRowVectors.at(outerCount)->genres.size(); i++)
+                {
+                    cout << vectorOfMovieRowVectors.at(outerCount)->genres.at(i) << ", ";
+                }
+                cout << endl;
+
+                // Print cast names
+                cout << endl << "Cast: " << endl;
                 for (int i = 0; i < vectorOfMovieRowVectors.at(outerCount)->cast.size(); i++)
                 {
                     cout << vectorOfMovieRowVectors.at(outerCount)->cast.at(i) << endl;
                 }
                 cout << endl;
+                
+                
+            
             }
 
+            /*
             // Test loop to print out movie titles along with their director's name
             howMany = 15;
             for (int outerCount = 0; outerCount < howMany; outerCount++)
@@ -388,6 +411,7 @@ int main()
                 cout << vectorOfMovieRowVectors.at(outerCount)->movieTitle << endl;
                 cout << "Director: " << vectorOfMovieRowVectors.at(outerCount)->director << endl << endl;
             }
+            */
 
             /*
             cout << endl << "Printing the first " << "all" << " director names...";
