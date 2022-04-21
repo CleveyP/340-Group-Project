@@ -171,7 +171,7 @@ string whoIsDirector(string extractFromThisString)
 
 // Converted existing main into a function
 // This will return the resulting vector of structs (each struct is data from a movie row)
-vector<combinedMovieStruct *> createVectorOfStructs()
+vector<combinedMovieStruct *> createPrimaryVectorOfStructs()
 {
     ifstream inputFile;
     inputFile.open("./TSV Files/movies.tsv");
@@ -405,7 +405,7 @@ vector<combinedMovieStruct *> createVectorOfStructs()
                 cout << endl;
             }
             */
-           
+
             /*
             // Test loop to print out movie titles along with their director's name
             howMany = 15;
