@@ -169,6 +169,28 @@ string whoIsDirector(string extractFromThisString)
     return directorName; // Return the finished director name string, either empty if none was found, or a proper name if one was
 }
 
+// Function to create a list of literally every actor in all the movies and merge them into one big string vector, for use in the frequency counter cpp
+vector<string> constructMegaCastList(vector<combinedMovieStruct *> structVec){
+    vector<string> megaCastList = {};
+    // For each struct in the struct vector
+    for (size_t primaryIndex = 0; primaryIndex < structVec.size(); primaryIndex++)
+    {
+        // For the size of the cast vector at each index in the struct vec...
+        //cout << "Primary for" << endl;
+        
+        for (size_t castIndex = 0; castIndex < structVec.at(primaryIndex)->cast.size(); castIndex++)
+        {
+            // Add the cast member from the internal cast vector to the mega cast list
+            // (this will result in all actors from every movie being combined into mega cast list)
+            //cout << "Cast for" << endl;
+            megaCastList.push_back(structVec.at(primaryIndex)->cast.at(castIndex));
+        }
+
+    }
+    cout << "mega cast list returned" << endl;
+    return megaCastList;
+}
+
 // Converted existing main into a function
 // This will return the resulting vector of structs (each struct is data from a movie row)
 vector<combinedMovieStruct *> createPrimaryVectorOfStructs()

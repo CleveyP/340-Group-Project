@@ -16,11 +16,21 @@ New main file for consolidating the existing and upcoming functions into one mai
 using namespace std;
 
 #include "tsvReaderMergedFunction.cpp"  // Include the way to convert the database files into a usable vector of structs
+#include "actorFreqCounter.cpp"
 
 int main()
 {
+    // Store the primary struct resulting from the conversion of the two tsv files into a variable for use in functions later
     vector<combinedMovieStruct *> primaryStructVector = createPrimaryVectorOfStructs();
-    
+
+    // Create the list of all actors in all movies for use in the actor frequency counter functions
+    vector<string> megaCastList = constructMegaCastList(primaryStructVector);
+
+    vector<Actor> resultOfSort = sortedActorFreqVec(megaCastList);
+    printFreqVec(resultOfSort);
+
+
+/*
     // Loop to print out movie titles along with their director, genres, and actors list
             int howMany = 400;
             for (int outerCount = 0; outerCount < howMany; outerCount++)
@@ -50,6 +60,7 @@ int main()
                 }
                 cout << endl;
             }
+            */
 
 
 }

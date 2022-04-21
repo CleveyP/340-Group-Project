@@ -93,6 +93,7 @@ vector<Actor> sortedActorFreqVec(vector<string> inputMegaCastVec){
     return actorFreqVec;
 }
 
+/*
   // Old main function for testing purposes.
 int main()
 {
@@ -114,3 +115,4 @@ int main()
 
     return 0;
 }
+*/
