@@ -54,8 +54,8 @@ int main()
     vector<combinedMovieStruct *> ninetiesMoviesVecByRevenue = descendingRevenue(ninetiesMoviesVec);
     
 
-    // Resize the 90's movies by revenue to only be the first 20 movies in that vector
-    // Then build a cast list out of all actors in those top 20 movies by revenue
+    // Resize the 90's movies by revenue to only be the first 30 movies in that vector
+    // Then build a cast list out of all actors in those top 30 movies by revenue
     // Then sort that list by frequency
     // Then print out that sorted list
     ninetiesMoviesVecByRevenue.resize(30);
