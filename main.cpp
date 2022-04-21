@@ -1,8 +1,8 @@
 /*
 Stephen Martel
-4/20/2022
-Combining my existing credits.tsv and movies.tsv
-TSV File reader for the movies tsv file
+4/21/2022
+
+New main file for consolidating the existing and upcoming functions into one main
 
 */
 
@@ -15,7 +15,7 @@ TSV File reader for the movies tsv file
 
 using namespace std;
 
-#include "tsvReaderMergedFunction.cpp"
+#include "tsvReaderMergedFunction.cpp"  // Include the way to convert the database files into a usable vector of structs
 
 int main()
 {
