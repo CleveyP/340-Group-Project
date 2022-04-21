@@ -23,12 +23,31 @@ int main()
     // Store the primary struct resulting from the conversion of the two tsv files into a variable for use in functions later
     vector<combinedMovieStruct *> primaryStructVector = createPrimaryVectorOfStructs();
 
+    
+    // Create a vector of structs consisting of only movies within the year range 1990 - 1999
+    vector<combinedMovieStruct *> ninetiesMoviesVec = limitedYearsStructVec(primaryStructVector, 1990, 1999);
+
+    // Create the list of all actors in the above nineties movies struct vector
+    vector<string> megaCastList = constructMegaCastList(ninetiesMoviesVec);
+
+    // Print all release years in the nineties movies vector to see if it worked
+    for (size_t currentIndex = 0; currentIndex < ninetiesMoviesVec.size(); currentIndex++)
+    {
+        cout << ninetiesMoviesVec.at(currentIndex)->movieTitle << ": " << ninetiesMoviesVec.at(currentIndex)->releaseDate << endl;
+    }
+    
+
+
+/*
+    // Testing the mega cast list printing all actor freqs of all movies
+
     // Create the list of all actors in all movies for use in the actor frequency counter functions
     vector<string> megaCastList = constructMegaCastList(primaryStructVector);
 
     vector<Actor> resultOfSort = sortedActorFreqVec(megaCastList);
     printFreqVec(resultOfSort);
-
+*/
+    
 
 /*
     // Loop to print out movie titles along with their director, genres, and actors list

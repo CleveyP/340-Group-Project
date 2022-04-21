@@ -169,23 +169,44 @@ string whoIsDirector(string extractFromThisString)
     return directorName; // Return the finished director name string, either empty if none was found, or a proper name if one was
 }
 
-// Function to create a list of literally every actor in all the movies and merge them into one big string vector, for use in the frequency counter cpp
-vector<string> constructMegaCastList(vector<combinedMovieStruct *> structVec){
+// Function to extract only specific year range structs from a vector and put them in a new vector which is returned
+vector<combinedMovieStruct *> limitedYearsStructVec(vector<combinedMovieStruct *> inputStructVec, int startYear, int endYear)
+{
+    // Create a new vector of structs which we will return later once it is filled
+    vector<combinedMovieStruct *> rangedStructVec = {};
+
+    // For each struct in the input struct vector...
+    for (size_t primaryIndex = 0; primaryIndex < inputStructVec.size(); primaryIndex++)
+    {
+        // If the year in this struct is within the input year range...
+        if (inputStructVec.at(primaryIndex)->releaseDate >= startYear && inputStructVec.at(primaryIndex)->releaseDate <= endYear)
+        {
+            // Add this struct to the new limited-by-year struct vec
+            rangedStructVec.push_back(inputStructVec.at(primaryIndex));
+        }
+    }
+
+    return rangedStructVec;
+}
+
+// Function to create a list of literally every actor in all the movies in the input struct and merge them into one big string vector, for use in the frequency counter cpp
+vector<string> constructMegaCastList(vector<combinedMovieStruct *> structVec)
+{
+    // Create a new vector of strings which we will return later once it is filled
     vector<string> megaCastList = {};
-    // For each struct in the struct vector
+    // For each struct in the input struct vector
     for (size_t primaryIndex = 0; primaryIndex < structVec.size(); primaryIndex++)
     {
         // For the size of the cast vector at each index in the struct vec...
-        //cout << "Primary for" << endl;
-        
+        // cout << "Primary for" << endl;
+
         for (size_t castIndex = 0; castIndex < structVec.at(primaryIndex)->cast.size(); castIndex++)
         {
             // Add the cast member from the internal cast vector to the mega cast list
             // (this will result in all actors from every movie being combined into mega cast list)
-            //cout << "Cast for" << endl;
+            // cout << "Cast for" << endl;
             megaCastList.push_back(structVec.at(primaryIndex)->cast.at(castIndex));
         }
-
     }
     cout << "mega cast list returned" << endl;
     return megaCastList;
@@ -452,4 +473,3 @@ vector<combinedMovieStruct *> createPrimaryVectorOfStructs()
         return vectorOfMovieRowVectors; // Return the completed vector of structs once done
     }
 } // end of vector of structs creation function
-
