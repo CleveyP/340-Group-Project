@@ -112,8 +112,8 @@ vector<string> convertStringToArray(string convertThis, string conversionType)
                     foundName.push_back(nextChar);                // Add each char in the string until a quotation is reached, meaning the end of the actor or genre name
                     nextCharIndex++;                              // Increment the current index by 1 to get each subsequent letter in the actor or genre name, if there are more
                 }
-                foundName.pop_back(); // Delete the comma
-                foundName.pop_back(); // Delete the quotes
+                foundName.pop_back(); // Delete the spare comma
+                foundName.pop_back(); // Delete the spare quotes
                 if (conversionType == "genre")
                 {
                     foundName.pop_back(); // Genre has an extra quote so remove that
@@ -153,20 +153,20 @@ string whoIsDirector(string extractFromThisString)
 
             // A copy of the found index, which can be modified safely
             int nextCharIndex = foundIndex;
-            while (nextChar != ',' && nextChar != ']') // A comma marks the end of the director's name, so we stop there
+            while (nextChar != ',' && nextChar != ']') // A comma marks the end of the director's name, so we stop there, ] added as a failsafe for directors who are listed at the end of a vector (no comma so another stopping point is needed)
             {
-                nextChar = extractFromThisString.at(nextCharIndex + 21); // The next char is the next character in the index after the found index in the find() function +21 to get past the found word and the quotes and spaces..
+                nextChar = extractFromThisString.at(nextCharIndex + 21); // The first character of the word we want is the next character after the index returned from the find() function +21 to get past the found word and the quotes and spaces..
                 directorName.push_back(nextChar);                        // Add each char in the string until a quotation is reached, meaning the end of the director name
                 nextCharIndex++;                                         // Increment the current index by 1 to get each subsequent letter in the director's name, if there are more
             }
-            directorName.pop_back(); // Delete the comma
-            directorName.pop_back(); // Delete the quote
-            directorName.pop_back(); // Delete the quote
+            directorName.pop_back(); // Delete the spare comma
+            directorName.pop_back(); // Delete the spare quote
+            directorName.pop_back(); // Delete the spare quote
         }
         // cout << directorName << endl; debug line that prints director names
     }
 
-    return directorName;
+    return directorName; // Return the finished director name string, either empty if none was found, or a proper name if one was
 }
 
 int main()
@@ -188,7 +188,7 @@ int main()
         getline(inputFile, currentLine); // Bypass the first line which has the column labels in it
         // ______________________________________________________________________________________
 
-        int runCounter = 0; // debugging int to find out which line this might break on
+        int moviesRunCounter = 0; // debugging int to find out which line this might break on
 
         while (!inputFile.eof()) // While not at the end of the file...
         {
@@ -198,10 +198,7 @@ int main()
             */
 
             getline(inputFile, currentLine);                   // Get the current row from the document
-            currentRowVector = delimitThis(currentLine, '\t'); // Call the delimiter function to split this line up into columns
-
-            // TO DO:
-            // CONVERT THIS WHOLE THING TO WORK FOR MOVIES TSV
+            currentRowVector = delimitThis(currentLine, '\t'); // Call the delimiter function to split this line up into columns, using tab as delimiter
 
             combinedMovieStruct *newRowStruct = new combinedMovieStruct;
             (*newRowStruct).movieTitle = currentRowVector.at(0); // Save the movie title data
@@ -222,7 +219,6 @@ int main()
             // __________________________________________________________________________
 
             // If there is a release date (tested by having a length greater than or equal to 4)
-
             if (currentRowVector.at(4).size() >= 4)
             {
                 // cout << currentLineVector.at(0) << "  Release Date: " << std::stoi(currentLineVector.at(4).substr(0, 4)) << endl;
@@ -253,52 +249,157 @@ int main()
             vectorOfMovieRowVectors.push_back(newRowStruct); // Save this struct in the big vector of row structs
 
             // cout << i << endl; // Debugging line to find out how many times this runs all the way to the end of this loop
-            runCounter++;
+            moviesRunCounter++;
         }
+        //___________________________________________________________________
 
-        cout << endl;
-        // Print elements of the structs to see if this works
-        // cout << vectorOfRowVectors.at(0)->title << endl;
-        // cout << vectorOfRowVectors.at(0)->cast << endl;
-        // cout << vectorOfRowVectors.at(0)->crew << endl;
-
-        // Testing printing loop, change increment to however many to print out
         /*
-        int howManYEE = 20;
-        cout << endl << "Printing the first " << howManYEE << " movie revenues..." << endl;
-        for (int increment = 0; increment < howManYEE; increment++)
-        {
-            cout << vectorOfMovieRowVectors.at(increment)->movieTitle << " Revenue: " << vectorOfMovieRowVectors.at(increment)->revenue << endl;
-        }
+        Spacer
 
-        double avatar = vectorOfMovieRowVectors.at(0)->revenue;
-        double pirates = vectorOfMovieRowVectors.at(1)->revenue;
-        bool testBool = (avatar > pirates);
-        cout << endl << "TestBool result says: " << testBool << endl;
+
+
+
+
+
+        // Start of transferring the credits main method in here
+
+
+
         */
 
-        // Test loop to print out movie titles along with their genres list
-        int howMany = 15;
-        for (int increment = 0; increment < howMany; increment++)
-        {
-            cout << vectorOfMovieRowVectors.at(increment)->movieTitle << endl;
-            for (int i = 0; i < vectorOfMovieRowVectors.at(increment)->genres.size(); i++)
+        inputFile.close();                         // Close the movies tsv file
+        inputFile.open("./TSV Files/credits.tsv"); // Open the credits.tsv file now
+
+        // Reset these storage and tracker variables back to their initial values just in case
+        currentLine = "";
+        rowNum = 1;
+        currentRowVector = {};
+
+        if (!inputFile)
+        { // If there is no input file... (it didn't open) then display an error message
+            cout << "The credits file did not open correctly, exiting the program";
+            return -1;
+        }
+        else
+        {                                    // If the file opened successfully
+            getline(inputFile, currentLine); // Bypass the first line which has the column labels in it
+            // ______________________________________________________________________________________
+
+            int creditsRunCounter = 0; // debugging int to find out which line this might break on
+
+            while (!inputFile.eof()) // While not at the end of the file...
             {
-                cout << vectorOfMovieRowVectors.at(increment)->genres.at(i) << endl;
+                /* debugging lines
+                cout << inputFile.eof() << endl;
+                cout << "while loop" << endl;
+                */
+
+                getline(inputFile, currentLine);                   // Get the current row from the document
+                currentRowVector = delimitThis(currentLine, '\t'); // Call the delimiter function to split this line up into columns, using tab as delimiter
+
+                creditsStruct *changeToExistingStruct = new creditsStruct;
+                // Failsafe if statement to check if the title of the current row matches the title stored in the struct at the same index in the vector of structs (To make sure we're storing data for the correct movie)
+                // currentRowVector.at(0) is the title value of the current row,  vectorOfMovieRowVectors.at(creditsRunCounter)->movieTitle  is the movie title at the index equivalent to how many times this has run, which should sync up
+                if (currentRowVector.at(0) == vectorOfMovieRowVectors.at(creditsRunCounter)->movieTitle)
+                {
+                    // Only store cast data if it exists and it's actually the cast data, checked if it contains "character" which is exclusive to cast
+                    if (currentRowVector.size() >= 2 && currentRowVector.at(1).find("character") != std::string::npos)
+                    {
+                        vectorOfMovieRowVectors.at(creditsRunCounter)->cast = convertStringToArray(currentRowVector.at(1), "cast"); // Save the movie cast data after is has been converted from a string to array in the data value for cast in the movie struct
+                    }
+
+                    // Only director name if crew data exists and it's actually the crew data (checked by if it contains department which is exclusive to crew (director is in some character names in cast so that's out), != npos means it's in there somewhere)
+                    if (currentRowVector.size() >= 3 && currentRowVector.at(2).find("department") != std::string::npos)
+                    {
+
+                        vectorOfMovieRowVectors.at(creditsRunCounter)->director = whoIsDirector(currentRowVector.at(2)); // Save the director data in the struct's director data value
+                    }
+                }
+                // cout << i << endl; // Debugging line to find out how many times this runs all the way to the end of this loop
+                creditsRunCounter++;
             }
+
+            /*
+
+
+
+
+
+            Spacer
+
+
+
+
+
+
+
+
+            */
+            //___________________________________________________________________
             cout << endl;
+            // Print elements of the structs to see if this works
+            // cout << vectorOfRowVectors.at(0)->title << endl;
+            // cout << vectorOfRowVectors.at(0)->cast << endl;
+            // cout << vectorOfRowVectors.at(0)->crew << endl;
+
+            // Testing printing loop, change increment to however many to print out
+            /*
+            int howManYEE = 20;
+            cout << endl << "Printing the first " << howManYEE << " movie revenues..." << endl;
+            for (int increment = 0; increment < howManYEE; increment++)
+            {
+                cout << vectorOfMovieRowVectors.at(increment)->movieTitle << " Revenue: " << vectorOfMovieRowVectors.at(increment)->revenue << endl;
+            }
+
+            double avatar = vectorOfMovieRowVectors.at(0)->revenue;
+            double pirates = vectorOfMovieRowVectors.at(1)->revenue;
+            bool testBool = (avatar > pirates);
+            cout << endl << "TestBool result says: " << testBool << endl;
+            */
+
+            // Test loop to print out movie titles along with their genres list
+            int howMany = 15;
+            for (int increment = 0; increment < howMany; increment++)
+            {
+                cout << vectorOfMovieRowVectors.at(increment)->movieTitle << endl;
+                for (int i = 0; i < vectorOfMovieRowVectors.at(increment)->genres.size(); i++)
+                {
+                    cout << vectorOfMovieRowVectors.at(increment)->genres.at(i) << endl;
+                }
+                cout << endl;
+            }
+
+            // Test loop to print out movie titles along with their actors list
+            howMany = 15;
+            for (int outerCount = 0; outerCount < howMany; outerCount++)
+            {
+                cout << vectorOfMovieRowVectors.at(outerCount)->movieTitle << endl;
+                for (int i = 0; i < vectorOfMovieRowVectors.at(outerCount)->cast.size(); i++)
+                {
+                    cout << vectorOfMovieRowVectors.at(outerCount)->cast.at(i) << endl;
+                }
+                cout << endl;
+            }
+
+            // Test loop to print out movie titles along with their director's name
+            howMany = 15;
+            for (int outerCount = 0; outerCount < howMany; outerCount++)
+            {
+                cout << vectorOfMovieRowVectors.at(outerCount)->movieTitle << endl;
+                cout << "Director: " << vectorOfMovieRowVectors.at(outerCount)->director << endl << endl;
+            }
+
+            /*
+            cout << endl << "Printing the first " << "all" << " director names...";
+                // Test loop to print out the first 10 directors
+                    for (int increment = 0; increment < vectorOfMovieRowVectors.size(); increment++)
+
+                    {
+                        cout << vectorOfMovieRowVectors.at(increment)->revenue << endl;
+                    }
+                    */
         }
 
-        /*
-        cout << endl << "Printing the first " << "all" << " director names...";
-            // Test loop to print out the first 10 directors
-                for (int increment = 0; increment < vectorOfMovieRowVectors.size(); increment++)
-
-                {
-                    cout << vectorOfMovieRowVectors.at(increment)->revenue << endl;
-                }
-                */
+        return 0;
     }
-
-    return 0;
 }
