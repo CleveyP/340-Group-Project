@@ -92,11 +92,11 @@ vector<string> convertStringToArray(string convertThis, string conversionType)
             // Find all remaining occurrences of sus string in the vector in the while loop
 
             // Two variables to help us stop after storing a certain number of actors (stopAfterThisMany)
-            int stopAfterThisMany = 15; 
+            int stopAfterThisMany = 15;
             int currentLengthOfCastArray = 0; // Starts at 0 because the actor array starts empty
 
             // Added && condition so it stops after the actor array reaches the size specified above (so only the first 15 actors for example)
-            while (foundIndex != string::npos &&  currentLengthOfCastArray < stopAfterThisMany) // Continue until there are no more sus strings to be found (the one we're looking for)
+            while (foundIndex != string::npos && currentLengthOfCastArray < stopAfterThisMany) // Continue until there are no more sus strings to be found (the one we're looking for)
             {
                 // cout << "Next found starting index is " << foundIndex << endl; debug line
 
@@ -121,12 +121,52 @@ vector<string> convertStringToArray(string convertThis, string conversionType)
 
                 // cout << "pushing back: " << foundName << endl; Debug line to output the name being added to the new array
                 newArray.push_back(foundName);                            // Add the completed actor or genre name to the newly forming array
-                currentLengthOfCastArray++;   // Increment the counter for how many times this has run by 1 each time so we can stop after say, the first 15 actors are added
+                currentLengthOfCastArray++;                               // Increment the counter for how many times this has run by 1 each time so we can stop after say, the first 15 actors are added
                 foundIndex = convertThis.find(susString, foundIndex + 8); // +8 because that's the length of "name\": \"" excluding the escape characters \     "
-            } // end while loop
-        }// end if statement of conversion type
-    }// end if size>0 if statement
-    return newArray; // Return the array of strings once done with any changes
+            }                                                             // end while loop
+        }                                                                 // end if statement of conversion type
+    }                                                                     // end if size>0 if statement
+    return newArray;                                                      // Return the array of strings once done with any changes
+}
+
+// Function designed to retrieve ONLY the director's name from the crew array that's part of the credits.TSV
+// Takes in a string, which should be the string version of the row's crew vector in crew.tsv
+string whoIsDirector(string extractFromThisString)
+{
+    // Initialize director name to be blank if there is no director listed for the movie
+    string directorName = "";
+    // cout << "crew conversion" << endl; // debug print line
+    string susString = "\"Director\", \"name\": \""; // Searching for this, 21 chars long excluding escape characters
+    // Just Director alone wasn't enough because there we multiple types of directors in the crew section, but we're only looking for the main director
+
+    // If there is a director name in the given string (determined with find != npos, which means it's somewhere in there)
+    if (extractFromThisString.find(susString) != string::npos)
+    {
+        // Find all occurrences of sus string (in this case it's name)
+        size_t foundIndex = extractFromThisString.find(susString);
+        while (directorName.size() == 0) // Continue until the director name is greater than 0 (A name is filled in)
+        {
+            // cout << "Next found starting index is " << foundIndex << endl; debug line
+
+            // A tracker of the current char, used to end the loop on a comma
+            char nextChar = 'a';
+
+            // A copy of the found index, which can be modified safely
+            int nextCharIndex = foundIndex;
+            while (nextChar != ',' && nextChar != ']') // A comma marks the end of the director's name, so we stop there
+            {
+                nextChar = extractFromThisString.at(nextCharIndex + 21); // The next char is the next character in the index after the found index in the find() function +21 to get past the found word and the quotes and spaces..
+                directorName.push_back(nextChar);                        // Add each char in the string until a quotation is reached, meaning the end of the director name
+                nextCharIndex++;                                         // Increment the current index by 1 to get each subsequent letter in the director's name, if there are more
+            }
+            directorName.pop_back(); // Delete the comma
+            directorName.pop_back(); // Delete the quote
+            directorName.pop_back(); // Delete the quote
+        }
+        // cout << directorName << endl; debug line that prints director names
+    }
+
+    return directorName;
 }
 
 int main()
@@ -138,18 +178,17 @@ int main()
     vector<string> currentRowVector;
     vector<combinedMovieStruct *> vectorOfMovieRowVectors; // The big vector holding all of the structs containing the data from each row of the input files
 
-
     if (!inputFile)
     { // If there is no input file... (it didn't open) then display an error message
         cout << "The movies file did not open correctly, exiting the program";
         return -1;
     }
     else
-    {   // If the file opened successfully
+    {                                    // If the file opened successfully
         getline(inputFile, currentLine); // Bypass the first line which has the column labels in it
         // ______________________________________________________________________________________
 
-        int runCounter = 0;                                             // debugging int to find out which line this might break on
+        int runCounter = 0; // debugging int to find out which line this might break on
 
         while (!inputFile.eof()) // While not at the end of the file...
         {
