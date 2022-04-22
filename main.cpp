@@ -103,6 +103,22 @@ int main()
     cout << "Number of different Genres found: " << sortedNinetiesGenres.size()<< endl << endl;
     printFreqVec(sortedNinetiesGenres);
     
+
+    // Testing rating sort
+    cout << "\nNow printing those (top 30 movies by revenue) by descending ratings: " << endl;
+    vector<combinedMovieStruct *> ninetiesMoviesTop30Rated = descendingRatingsSort(ninetiesMoviesVecByRevenue);
+    for (size_t i = 0; i < ninetiesMoviesTop30Rated.size(); i++)
+    {
+        cout << ninetiesMoviesTop30Rated.at(i)->movieTitle << ": " << ninetiesMoviesTop30Rated.at(i)->rating << endl;
+    }
+
+    // Testing rating sort
+    cout << "\nNow printing those (top 30 movies by revenue) by descending popularity: " << endl;
+    vector<combinedMovieStruct *> ninetiesMoviesTop30Popularity = descendingPopularitySort(ninetiesMoviesVecByRevenue);
+    for (size_t i = 0; i < ninetiesMoviesTop30Popularity.size(); i++)
+    {
+        cout << fixed << setprecision(0) << ninetiesMoviesTop30Popularity.at(i)->movieTitle << ": " << (ninetiesMoviesTop30Popularity.at(i)->revenue * ninetiesMoviesTop30Popularity.at(i)->rating) << endl;
+    }
     
 
 
