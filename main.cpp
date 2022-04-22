@@ -43,7 +43,7 @@ int main()
     printFreqVec(resultOfSort);
 
     // Previous revenue sorting testing
-    vector<combinedMovieStruct *> ninetiesMoviesVecByRevenue = ascendingRevenue(ninetiesMoviesVec);
+    vector<combinedMovieStruct *> ninetiesMoviesVecByRevenue = ascendingRevenueSort(ninetiesMoviesVec);
     for (size_t currentIndex = 0; currentIndex < ninetiesMoviesVecByRevenue.size(); currentIndex++)
     {
         cout << fixed << setprecision(0) << ninetiesMoviesVecByRevenue.at(currentIndex)->movieTitle << ": " << ninetiesMoviesVecByRevenue.at(currentIndex)->revenue << endl;
@@ -51,7 +51,7 @@ int main()
 
     */
 
-    vector<combinedMovieStruct *> ninetiesMoviesVecByRevenue = descendingRevenue(ninetiesMoviesVec);
+    vector<combinedMovieStruct *> ninetiesMoviesVecByRevenue = descendingRevenueSort(ninetiesMoviesVec);
     
 
     // Resize the 90's movies by revenue to only be the first 30 movies in that vector
@@ -63,9 +63,16 @@ int main()
     vector<Actor> sortedNinetiesCast = sortedActorFreqVec(ninetiesCastList);
     printFreqVec(sortedNinetiesCast);
     
+    cout << "Now printing those top 30 movies by revenue by descending release date: " << endl;
+    vector<combinedMovieStruct *> ninetiesMoviesTop30ByYear = descendingYearSort(ninetiesMoviesVecByRevenue);
+    for (size_t i = 0; i < ninetiesMoviesTop30ByYear.size(); i++)
+    {
+        cout << ninetiesMoviesTop30ByYear.at(i)->movieTitle << ": " << ninetiesMoviesTop30ByYear.at(i)->releaseDate << endl;
+    }
+    
 
    /* Profit sorting testing
-    vector<combinedMovieStruct *> ninetiesMoviesVecByRevenue = descendingProfit(ninetiesMoviesVec);
+    vector<combinedMovieStruct *> ninetiesMoviesVecByRevenue = descendingProfitSort(ninetiesMoviesVec);
     for (size_t currentIndex = 0; currentIndex < ninetiesMoviesVecByRevenue.size(); currentIndex++)
     {
         cout << fixed << setprecision(0) << ninetiesMoviesVecByRevenue.at(currentIndex)->movieTitle << ": " << (ninetiesMoviesVecByRevenue.at(currentIndex)->revenue - ninetiesMoviesVecByRevenue.at(currentIndex)->budget) << endl;

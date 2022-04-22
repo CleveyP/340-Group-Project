@@ -47,10 +47,31 @@ bool lowProfitBool(combinedMovieStruct* &struct1, combinedMovieStruct* &struct2)
     return ((struct1->revenue - struct1->budget) < (struct2->revenue - struct2->budget));
 }
 
+
+// _____________ Release date sorting booleans _____________
+
+// Quick comparison of two release date values for use in the sort by High to Low sort function
+bool descendingYears(combinedMovieStruct* &struct1, combinedMovieStruct* &struct2)
+{
+    return struct1->releaseDate > struct2->releaseDate;
+}
+
+// Quick comparison of two release date values for use in the sort by Low to High sort function
+bool ascendingYears(combinedMovieStruct* &struct1, combinedMovieStruct* &struct2)
+{
+    return struct1->releaseDate < struct2->releaseDate;
+}
+
+
+
+
+
 // _____________ Actual sorting functions _____________
 
+// ___Revenue sorting ___
+
 // Calls the sort function with starting point of the beginning of the vector of structs and ending at the end of it, with a sorting type of high to low (descending)
-vector<combinedMovieStruct *> descendingRevenue(vector<combinedMovieStruct *> inputVector) {
+vector<combinedMovieStruct *> descendingRevenueSort(vector<combinedMovieStruct *> inputVector) {
     
     sort(inputVector.begin(), inputVector.end(), highRevBool);
 
@@ -59,15 +80,16 @@ vector<combinedMovieStruct *> descendingRevenue(vector<combinedMovieStruct *> in
 }
 
 // Calls the sort function with starting point of the beginning of the vector of structs and ending at the end of it, with a sorting type of low to high (ascending)
-vector<combinedMovieStruct *> ascendingRevenue(vector<combinedMovieStruct *> inputVector) {
+vector<combinedMovieStruct *> ascendingRevenueSort(vector<combinedMovieStruct *> inputVector) {
     sort(inputVector.begin(), inputVector.end(), lowRevBool);
 
     // Return the sorted vector of structs'
     return inputVector;
 }
 
+// ___Profit sorting ___
 // Calls the sort function with starting point of the beginning of the vector of structs and ending at the end of it, with a sorting type of high to low (descending)
-vector<combinedMovieStruct *> descendingProfit(vector<combinedMovieStruct *> inputVector) {
+vector<combinedMovieStruct *> descendingProfitSort(vector<combinedMovieStruct *> inputVector) {
     
     sort(inputVector.begin(), inputVector.end(), highProfitBool);
 
@@ -76,8 +98,29 @@ vector<combinedMovieStruct *> descendingProfit(vector<combinedMovieStruct *> inp
 }
 
 // Calls the sort function with starting point of the beginning of the vector of structs and ending at the end of it, with a sorting type of low to high (ascending)
-vector<combinedMovieStruct *> ascendingProfit(vector<combinedMovieStruct *> inputVector) {
+vector<combinedMovieStruct *> ascendingProfitSort(vector<combinedMovieStruct *> inputVector) {
     sort(inputVector.begin(), inputVector.end(), lowProfitBool);
+
+    // Return the sorted vector of structs'
+    return inputVector;
+}
+
+
+
+// ___Release year sorting ___
+
+// Calls the sort function with starting point of the beginning of the vector of structs and ending at the end of it, with a sorting type of high to low (descending)
+vector<combinedMovieStruct *> descendingYearSort(vector<combinedMovieStruct *> inputVector) {
+    
+    sort(inputVector.begin(), inputVector.end(), descendingYears);
+
+    // Return the sorted vector of structs'
+    return inputVector;
+}
+
+// Calls the sort function with starting point of the beginning of the vector of structs and ending at the end of it, with a sorting type of low to high (ascending)
+vector<combinedMovieStruct *> ascendingYearSort(vector<combinedMovieStruct *> inputVector) {
+    sort(inputVector.begin(), inputVector.end(), ascendingYears);
 
     // Return the sorted vector of structs'
     return inputVector;
