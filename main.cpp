@@ -17,7 +17,7 @@ using namespace std;
 
 #include "actorFreqCounter.cpp"
 #include "additionalSorting.cpp" // Additional sorting also includes tsvReaderMergedFunction: which is the way to convert the database files into a usable vector of structs
-
+#include "genreFreqCounter.cpp"
 
 int main()
 {
@@ -63,13 +63,49 @@ int main()
     vector<Actor> sortedNinetiesCast = sortedActorFreqVec(ninetiesCastList);
     printFreqVec(sortedNinetiesCast);
     
+    /*
     cout << "Now printing those top 30 movies by revenue by descending release date: " << endl;
     vector<combinedMovieStruct *> ninetiesMoviesTop30ByYear = descendingYearSort(ninetiesMoviesVecByRevenue);
     for (size_t i = 0; i < ninetiesMoviesTop30ByYear.size(); i++)
     {
         cout << ninetiesMoviesTop30ByYear.at(i)->movieTitle << ": " << ninetiesMoviesTop30ByYear.at(i)->releaseDate << endl;
     }
+    */
+
+    // Debugging genre counter
+    // For the length of the overall struct vector...
+    for (size_t i = 0; i < ninetiesMoviesVecByRevenue.size(); i++)
+    {
+        // Print the movie title at the current index in the struct vector
+        cout << ninetiesMoviesVecByRevenue.at(i)->movieTitle << ": ";
+        
+        // For the length of the current index genre vector...
+        for (size_t j = 0; j < ninetiesMoviesVecByRevenue.at(i)->genres.size(); j++)
+        {
+            // Print out each genre in that genre vector
+            cout << ninetiesMoviesVecByRevenue.at(i)->genres.at(j) << ", ";
+        }
+        
+        cout << endl;
+    }
+
+    vector<string> ninetiesTopGenres = constructMegaGenreList(ninetiesMoviesVecByRevenue);
+    cout << "\n \n Beginning genres printing: \n";
+    for (size_t i = 0; i < ninetiesTopGenres.size(); i++)
+    {
+        cout << ninetiesTopGenres.at(i) << ", ";
+    }
+
+     cout << "\n\nSize of ninetiesTopGenres before: " << ninetiesTopGenres.size() << endl;
+    vector<Genre> sortedNinetiesGenres = sortGenreFreqVec(ninetiesTopGenres);
+    cout << "Size of ninetiesTopGenres after: " << ninetiesTopGenres.size() << endl;
+
+    cout << "Number of different Genres found: " << sortedNinetiesGenres.size()<< endl << endl;
+    printFreqVec(sortedNinetiesGenres);
     
+    
+
+
 
    /* Profit sorting testing
     vector<combinedMovieStruct *> ninetiesMoviesVecByRevenue = descendingProfitSort(ninetiesMoviesVec);

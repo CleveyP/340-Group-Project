@@ -212,6 +212,30 @@ vector<string> constructMegaCastList(vector<combinedMovieStruct *> structVec)
     return megaCastList;
 }
 
+// Function to create a vector of every genre in all the movies in the input struct and merge them into one big string vector, for use in the genreFreqCounter.cpp
+vector<string> constructMegaGenreList(vector<combinedMovieStruct *> structVec)
+{
+    // Create a new vector of strings which we will return later once it is filled
+    vector<string> megaGenreList = {};
+    // For each struct in the input struct vector
+    for (size_t primaryIndex = 0; primaryIndex < structVec.size(); primaryIndex++)
+    {
+        // For the size of the genres vector at each index in the struct vec...
+        // cout << "Primary for" << endl;
+
+        for (size_t genreIndex = 0; genreIndex < structVec.at(primaryIndex)->genres.size(); genreIndex++)
+        {
+            // Add the genre from the internal cast genre to the mega genre list
+            // (this will result in all genres from every movie being combined into mega genre list)
+            // cout << "Genre for" << endl;
+            megaGenreList.push_back(structVec.at(primaryIndex)->genres.at(genreIndex));
+        }
+    }
+    //cout << "mega genre list returned" << endl; debug line
+    return megaGenreList;
+}
+
+
 // Converted existing main into a function
 // This will return the resulting vector of structs (each struct is data from a movie row)
 vector<combinedMovieStruct *> createPrimaryVectorOfStructs()
