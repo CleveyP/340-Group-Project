@@ -208,7 +208,7 @@ vector<string> constructMegaCastList(vector<combinedMovieStruct *> structVec)
             megaCastList.push_back(structVec.at(primaryIndex)->cast.at(castIndex));
         }
     }
-    //cout << "mega cast list returned" << endl; debug line
+    // cout << "mega cast list returned" << endl; debug line
     return megaCastList;
 }
 
@@ -231,10 +231,9 @@ vector<string> constructMegaGenreList(vector<combinedMovieStruct *> structVec)
             megaGenreList.push_back(structVec.at(primaryIndex)->genres.at(genreIndex));
         }
     }
-    //cout << "mega genre list returned" << endl; debug line
+    // cout << "mega genre list returned" << endl; debug line
     return megaGenreList;
 }
-
 
 // Converted existing main into a function
 // This will return the resulting vector of structs (each struct is data from a movie row)
