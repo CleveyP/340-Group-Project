@@ -29,6 +29,8 @@ bool lowRevBool(combinedMovieStruct *&struct1, combinedMovieStruct *&struct2)
 
 
 
+
+
 */
 
 // _____________ Profit (revenue - budget) sorting booleans _____________
@@ -44,6 +46,14 @@ bool lowProfitBool(combinedMovieStruct *&struct1, combinedMovieStruct *&struct2)
 {
     return ((struct1->revenue - struct1->budget) < (struct2->revenue - struct2->budget));
 }
+
+/*
+
+
+
+
+
+*/
 
 // _____________ Release date sorting booleans _____________
 
@@ -81,6 +91,14 @@ bool ascendingRatings(combinedMovieStruct *&struct1, combinedMovieStruct *&struc
     return struct1->rating < struct2->rating;
 }
 
+/*
+
+
+
+
+
+*/
+
 // _____________ Popularity value (revenue * rating) sorting booleans _____________
 
 // Quick comparison of two Popularity values for use in the sort by High to Low sort function
@@ -96,6 +114,7 @@ bool ascendingPopularity(combinedMovieStruct *&struct1, combinedMovieStruct *&st
 }
 
 /*
+
 
 
 
@@ -125,6 +144,14 @@ vector<combinedMovieStruct *> ascendingRevenueSort(vector<combinedMovieStruct *>
     return inputVector;
 }
 
+/*
+
+
+
+
+
+*/
+
 // ___Profit sorting ___
 // Calls the sort function with starting point of the beginning of the vector of structs and ending at the end of it, with a sorting type of high to low (descending)
 vector<combinedMovieStruct *> descendingProfitSort(vector<combinedMovieStruct *> inputVector)
@@ -144,6 +171,14 @@ vector<combinedMovieStruct *> ascendingProfitSort(vector<combinedMovieStruct *> 
     // Return the sorted vector of structs'
     return inputVector;
 }
+
+/*
+
+
+
+
+
+*/
 
 // ___Release year sorting ___
 
@@ -166,6 +201,14 @@ vector<combinedMovieStruct *> ascendingYearSort(vector<combinedMovieStruct *> in
     return inputVector;
 }
 
+/*
+
+
+
+
+
+*/
+
 // ___ Rating sorting ___
 
 // Calls the sort function with starting point of the beginning of the vector of structs and ending at the end of it, with a sorting type of high to low (descending)
@@ -186,6 +229,14 @@ vector<combinedMovieStruct *> ascendingRatingsSort(vector<combinedMovieStruct *>
     // Return the sorted vector of structs'
     return inputVector;
 }
+
+/*
+
+
+
+
+
+*/
 
 // ___ Popularity (Revenue * rating) sorting ___
 
