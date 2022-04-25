@@ -42,7 +42,6 @@ int main()
     // Create a new struct limited to the input year range
     applyYearRange(primaryStructVector, yearRangeVec, startingYear, endingYear);
 
-
     while (stillRunning)
     {
         // Print the main menu and ask for an input
@@ -83,7 +82,8 @@ int main()
                 else
                 {
                     cout << "\nMost common actors in the highest grossing movies from " << startingYear << " to " << endingYear << endl;
-                    cout << "If this is blank, then that means that no actors starred in more than 1 film in your year range\n" << endl;
+                    cout << "If this is blank, then that means that no actors starred in more than 1 film in your year range\n"
+                         << endl;
                     printFreqVec(topCastCount);
                 }
                 // End of Most common actors in the highest grossing movies from this period
@@ -121,7 +121,8 @@ int main()
                 else
                 {
                     cout << "\nMost common genre categories of the highest grossing movies from " << startingYear << " to " << endingYear << endl;
-                    cout << "If this is blank, then that means that no films had genre data for your year range\n" << endl;
+                    cout << "If this is blank, then that means that no films had genre data for your year range\n"
+                         << endl;
                     printFreqVec(topGenreCount);
                 }
                 // End of Most common genres in the highest grossing movies from this period
@@ -129,7 +130,7 @@ int main()
             else if (userInput == "3")
             {
                 cout << "You have chosen to view the additional options menu." << endl;
-                
+
                 // Reset user input so it doesn't immediately pick an option
                 userInput = "";
 
@@ -142,31 +143,108 @@ int main()
                     if (userInput == "1")
                     {
                         cout << "You have chosen Revenue sorting" << endl;
+                        userInput = "";
+                        while (stillRunning)
+                        {
+                            cout << "\nThere are two sorting options for Revenue Sorting: \n";
+                            cout << "1  High-to-Low (Descending order)\n";
+                            cout << "2  Low-to-High (Ascending order)\n";
+                            cin >> userInput;
+                            if (userInput == "1")
+                            {
+                                cout << "You have chosen High-to-Low (Descending order)" << endl;
+
+                                // Call descending revenue sort to sort the vector by revenue high-to-low
+                                yearRangeVec = descendingRevenueSort(yearRangeVec);
+                                cout << "The vector has been sorted by by revenue in descending order." << endl;
+        
+
+                                // Default to printing 20 in the upcoming print loop
+                                int printCount = 20;
+
+                                // However if 20 is larger than the vector size, set it to the vector size so it doesn't go out of bounds
+                                if (printCount > yearRangeVec.size())
+                                {
+                                    printCount = yearRangeVec.size();
+                                }
+                                
+                                cout << "Printing the highest " << printCount << " movies by revenue: \n" << endl;
+
+                                for (size_t i = 0; i < printCount; i++)
+                                {
+                                    cout << fixed << setprecision(0) << yearRangeVec.at(i)->movieTitle << ": $" << yearRangeVec.at(i)->revenue << endl;
+                                }
+
+                                // exit the revenue sorting options
+                                break;
+
+                            } // End of descending revenue sort...
+                            else if (userInput == "2")
+                            {
+                                cout << "You have chosen Low-to-High (Ascending order)" << endl;
+
+                                // Call ascending revenue sort to sort the vector by revenue high-to-low
+                                yearRangeVec = ascendingRevenueSort(yearRangeVec);
+                                cout << "The vector has been sorted by by revenue in ascending order." << endl;
+        
+
+                                // Default to printing 20 in the upcoming print loop
+                                int printCount = 20;
+
+                                // However if 20 is larger than the vector size, set it to the vector size so it doesn't go out of bounds
+                                if (printCount > yearRangeVec.size())
+                                {
+                                    printCount = yearRangeVec.size();
+                                }
+                                
+                                cout << "Printing the lowest " << printCount << " movies by revenue: \n" << endl;
+
+                                for (size_t i = 0; i < printCount; i++)
+                                {
+                                    cout << fixed << setprecision(0) << yearRangeVec.at(i)->movieTitle << ": $" << yearRangeVec.at(i)->revenue << endl;
+                                }
+
+                                // exit the revenue sorting options
+                                break;
+
+                            } // End of ascending revenue sort
+                            else
+                            {
+                                cout << "Invalid input, please choose 1 or 2" << endl;
+                            }
+
+                        } // End Revenue sorting options
                     }
-                    else if(userInput == "2"){
+                    else if (userInput == "2")
+                    {
                         cout << "You have chosen Profit sorting" << endl;
                     }
-                    else if(userInput == "3"){
+                    else if (userInput == "3")
+                    {
                         cout << "You have chosen Release date sorting" << endl;
                     }
-                    else if(userInput == "4"){
+                    else if (userInput == "4")
+                    {
                         cout << "You have chosen Rating sorting" << endl;
                     }
-                    else if(userInput == "5"){
+                    else if (userInput == "5")
+                    {
                         cout << "You have chosen Popularity sorting" << endl;
                     }
-                    else if(userInput == "6"){
+                    else if (userInput == "6")
+                    {
                         cout << "Returning to main menu..." << endl;
                         // Reset user input and break, should return to main menu
                         userInput == "";
                         break;
                     }
-                    else{
+                    else
+                    {
                         cout << "Your input was invalid. Please enter a number from 1 - 6" << endl;
                     }
-                    
+
                 } // End alt menu while loop
-            } // End alt menu option
+            }     // End alt menu option
 
             else if (userInput == "4") // The user wants to change the year range
             {
@@ -185,7 +263,7 @@ int main()
             {
                 cout << "Ending the program!" << endl;
                 stillRunning = false; // stops this program from running
-            } // end of exit program option
+            }                         // end of exit program option
             // Reset user input back to blank so it doesn't keep going.
             userInput = "";
         }
