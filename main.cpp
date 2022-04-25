@@ -42,17 +42,18 @@ int main()
     // Create a new struct limited to the input year range
     applyYearRange(primaryStructVector, yearRangeVec, startingYear, endingYear);
 
-    // Print the main menu for the first time
-    displayMainMenu();
 
     while (stillRunning)
     {
+        // Print the main menu and ask for an input
+        displayMainMenu();
         cin >> userInput;
+
         if (userInput == "1" || userInput == "2" || userInput == "3" || userInput == "4" || userInput == "5")
         {
             if (userInput == "1") // Most common actors in the highest grossing movies from this period
             {
-
+                cout << "You have chosen: Most common actors in the highest grossing movies from " << startingYear << " to " << endingYear << endl;
                 // Run a sort by descending revenue on the year-limited vector
                 yearRangeVec = descendingRevenueSort(yearRangeVec);
 
@@ -61,7 +62,7 @@ int main()
                 cout << "How many movies would you like to include actors from?" << endl;
                 while (resizeTo < 5)
                 {
-                    cout << "Enter a count from 5 to " << yearRangeVec.size() << " ";
+                    cout << "Enter a count from 5 to " << yearRangeVec.size() << " : ";
                     cin >> resizeTo;
                 }
 
@@ -82,7 +83,7 @@ int main()
                 else
                 {
                     cout << "\nMost common actors in the highest grossing movies from " << startingYear << " to " << endingYear << endl;
-                    cout << "If this is blank, then that means that no actors starred in more than 1 film in your year range" << endl;
+                    cout << "If this is blank, then that means that no actors starred in more than 1 film in your year range\n" << endl;
                     printFreqVec(topCastCount);
                 }
                 // End of Most common actors in the highest grossing movies from this period
@@ -96,15 +97,24 @@ int main()
             {
                 cout << "Test input 3" << endl;
             }
-            else if (userInput == "4")
+            else if (userInput == "4") // The user wants to change the year range
             {
-                cout << "Test input 4" << endl;
+                cout << "You have chosen to change your year range." << endl;
+                startingYear = 0;
+                endingYear = 0;
+                // Repeatedly ask for year inputs
+                requestYearRange(startingYear, endingYear);
+
+                // Generate a new year range vector in the new year range
+                applyYearRange(primaryStructVector, yearRangeVec, startingYear, endingYear);
+                cout << "New year range " << startingYear << " to " << endingYear << " applied." << endl;
+                // end of change year range
             }
             else if (userInput == "5")
             {
                 cout << "Ending the program!" << endl;
-                stillRunning = false;
-            }
+                stillRunning = false; // stops this program from running
+            } // end of exit program option
             // Reset user input back to blank so it doesn't keep going.
             userInput = "";
         }

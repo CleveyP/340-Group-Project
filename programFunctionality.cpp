@@ -24,7 +24,7 @@ void requestYearRange(int &startingYear, int &endingYear)
     }
 
     // Get a proper ending year
-    while (endingYear < startingYear || endingYear >= 2017) // While the input is outside the valid range or less than the starting year, keep asking for an input until it is
+    while (endingYear < startingYear || endingYear > 2017) // While the input is outside the valid range or less than the starting year, keep asking for an input until it is
     {
         cout << "Enter an ending year from " << startingYear << " to 2017: ";
         cin >> endingYear; // Insert user input into ending year variable
@@ -44,7 +44,7 @@ void applyYearRange(vector<combinedMovieStruct *> primaryStructVector, vector<co
 
 // This function will print the list of options
 void displayMainMenu(){
-    cout << "Main Menu" << endl;
+    cout << "\nMain Menu" << endl;
     cout << "__________" << endl;
 
     cout << "1  Most common actors in the highest grossing movies from this period?" << endl;
@@ -52,20 +52,20 @@ void displayMainMenu(){
     cout << "3  Additional Sorting Options! (Revenue, Popularity, Budget, Rating, etc)" << endl;
     cout << "4  Choose a new year range" << endl;
     cout << "5  Quit - Exit - GET ME OUT OF HERE!" << endl;
-    cout << "\nWhat would you like to do? Enter number (1-5):" << endl;
+    cout << "\nWhat would you like to do? Enter number (1-5): ";
 
     
 }
 
 // This function will print the alternative sorting menu (accessed via option 3 on main menu)
 void displayAltMenu(){
-    cout << "Welcome to the alternative sorting option menu.\n" << endl;
+    cout << "\nWelcome to the alternative sorting option menu.\n" << endl;
     cout << "1  Revenue" << endl;
     cout << "2  Profit - (Budget minus Revenue)" << endl;
     cout << "3  Release date (by year)" << endl;
     cout << "4  Rating" << endl;
     cout << "5  Popularity - (Revenue times Rating)" << endl;
-    cout << "\nWhat would you like to do? Enter number (1-5):" << endl;
+    cout << "\nWhat would you like to do? Enter number (1-5): ";
 
 }
 
