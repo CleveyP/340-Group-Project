@@ -128,8 +128,46 @@ int main()
             }
             else if (userInput == "3")
             {
-                cout << "Test input 3" << endl;
-            }
+                cout << "You have chosen to view the additional options menu." << endl;
+                
+                // Reset user input so it doesn't immediately pick an option
+                userInput = "";
+
+                // Keep them in this alternative menu until they exit with option 6
+                while (stillRunning)
+                {
+                    displayAltMenu();
+                    cin >> userInput;
+
+                    if (userInput == "1")
+                    {
+                        cout << "You have chosen Revenue sorting" << endl;
+                    }
+                    else if(userInput == "2"){
+                        cout << "You have chosen Profit sorting" << endl;
+                    }
+                    else if(userInput == "3"){
+                        cout << "You have chosen Release date sorting" << endl;
+                    }
+                    else if(userInput == "4"){
+                        cout << "You have chosen Rating sorting" << endl;
+                    }
+                    else if(userInput == "5"){
+                        cout << "You have chosen Popularity sorting" << endl;
+                    }
+                    else if(userInput == "6"){
+                        cout << "Returning to main menu..." << endl;
+                        // Reset user input and break, should return to main menu
+                        userInput == "";
+                        break;
+                    }
+                    else{
+                        cout << "Your input was invalid. Please enter a number from 1 - 6" << endl;
+                    }
+                    
+                } // End alt menu while loop
+            } // End alt menu option
+
             else if (userInput == "4") // The user wants to change the year range
             {
                 cout << "You have chosen to change your year range." << endl;
@@ -153,7 +191,7 @@ int main()
         }
         else
         {
-            cout << "Your input was invalid. Please enter a number from 1 - 5: ";
+            cout << "Your input was invalid. Please enter a number from 1 - 5 " << endl;
         }
 
     } // While !exit loop
