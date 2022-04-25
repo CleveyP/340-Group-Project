@@ -68,15 +68,3 @@ void displayAltMenu(){
     cout << "\nWhat would you like to do? Enter number (1-5): ";
 
 }
-
-void processInput(string userInput){
-    if (userInput == "1" || userInput == "2"|| userInput == "3"|| userInput == "4"|| userInput == "5")
-    {
-        
-    }else{
-        cout << "Your input was invalid. Please enter a number from 1 - 5: ";
-        cin >> userInput;
-    }
-    
-
-}

@@ -100,7 +100,7 @@ void printFreqVec(vector<Genre> genreVec)
 
 // Sorts the populated vector of genre types by frequency value, highest first
 // Then returns the sorted vector
-vector<Genre> sortGenreFreqVec(vector<string> inputMegaGenreVec)
+vector<Genre> generateGenreFreqVec(vector<string> inputMegaGenreVec)
 {
     // Empty vector of genres to store the results of add_Genres
     vector<Genre> genreFreqVec; // First creates a new empty vector of genre classes

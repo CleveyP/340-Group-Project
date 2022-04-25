@@ -57,7 +57,7 @@ int main()
                 // Run a sort by descending revenue on the year-limited vector
                 yearRangeVec = descendingRevenueSort(yearRangeVec);
 
-                // Resize that newly revenue-sorted vector to the top 20
+                // Resize that newly revenue-sorted vector to the user input
                 int resizeTo = 0;
                 cout << "How many movies would you like to include actors from?" << endl;
                 while (resizeTo < 5)
@@ -91,7 +91,40 @@ int main()
 
             else if (userInput == "2")
             {
-                cout << "Test input 2" << endl;
+                cout << "You have chosen: Which genres of movies were most popular during this time period?" << endl;
+                // Run a sort by descending revenue on the year-limited vector
+                yearRangeVec = descendingRevenueSort(yearRangeVec);
+
+                // Resize that newly revenue-sorted vector to the user input
+                int resizeTo = 0;
+                cout << "How many movies would you like to include genres from?" << endl;
+                while (resizeTo < 5)
+                {
+                    cout << "Enter a count from 5 to " << yearRangeVec.size() << " : ";
+                    cin >> resizeTo;
+                }
+
+                yearRangeVec.resize(resizeTo);
+
+                // Construct a vector of all genres in those movies and store them in topGenreList
+                vector<string> topGenreList = constructMegaGenreList(yearRangeVec);
+
+                // Generate a vector of structs that contains genre name and frequency and then sort it high to low
+                vector<Genre> topGenreCount = generateGenreFreqVec(topGenreList);
+                topGenreCount = genreHighFreqSort(topGenreCount);
+
+                // If the cast list was empty then print a message for that
+                if (topGenreCount.size() == 0)
+                {
+                    cout << "There were no movies with genres in your chosen year range" << endl;
+                }
+                else
+                {
+                    cout << "\nMost common genre categories of the highest grossing movies from " << startingYear << " to " << endingYear << endl;
+                    cout << "If this is blank, then that means that no films had genre data for your year range\n" << endl;
+                    printFreqVec(topGenreCount);
+                }
+                // End of Most common genres in the highest grossing movies from this period
             }
             else if (userInput == "3")
             {
