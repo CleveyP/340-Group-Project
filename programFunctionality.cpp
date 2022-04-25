@@ -49,7 +49,7 @@ void displayMainMenu(){
 
     cout << "1  Most common actors in the highest grossing movies from this period?" << endl;
     cout << "2  Which genres of movies were most popular during this time period?" << endl;
-    cout << "3  Additional Sorting Options! (Revenue, Popularity, Budget, Rating, etc)" << endl;
+    cout << "3  Additional Sorting Options! (Revenue, Profit, Release Year, Rating, Popularity)" << endl;
     cout << "4  Choose a new year range" << endl;
     cout << "5  Quit - Exit - GET ME OUT OF HERE!" << endl;
     cout << "\nWhat would you like to do? Enter number (1-5): ";

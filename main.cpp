@@ -370,6 +370,77 @@ int main()
                     else if (userInput == "4")
                     {
                         cout << "You have chosen Rating sorting" << endl;
+                        userInput = "";
+                        while (stillRunning)
+                        {
+                            cout << "\nThere are two sorting options for Rating Sorting: \n";
+                            cout << "1  High-to-Low (Descending order)\n";
+                            cout << "2  Low-to-High (Ascending order)\n";
+                            cin >> userInput;
+                            if (userInput == "1")
+                            {
+                                cout << "You have chosen High-to-Low (Descending order)" << endl;
+
+                                // Call descending Rating sort to sort the vector by Rating high-to-low
+                                yearRangeVec = descendingRatingsSort(yearRangeVec);
+                                cout << "The vector has been sorted by by Rating in descending order." << endl;
+
+                                // Default to printing 20 in the upcoming print loop
+                                int printCount = 20;
+
+                                // However if 20 is larger than the vector size, set it to the vector size so it doesn't go out of bounds
+                                if (printCount > yearRangeVec.size())
+                                {
+                                    printCount = yearRangeVec.size();
+                                }
+
+                                cout << "Printing the highest " << printCount << " movies by Rating: \n"
+                                     << endl;
+
+                                for (size_t i = 0; i < printCount; i++)
+                                {
+                                    cout << yearRangeVec.at(i)->movieTitle << ": " << yearRangeVec.at(i)->rating << endl;
+                                }
+
+                                // exit the Rating sorting options
+                                break;
+
+                            } // End of descending Rating sort...
+                            else if (userInput == "2")
+                            {
+                                cout << "You have chosen Low-to-High (Ascending order)" << endl;
+
+                                // Call ascending Rating sort to sort the vector by Rating high-to-low
+                                yearRangeVec = ascendingRatingsSort(yearRangeVec);
+                                cout << "The vector has been sorted by by Rating in ascending order." << endl;
+
+                                // Default to printing 20 in the upcoming print loop
+                                int printCount = 20;
+
+                                // However if 20 is larger than the vector size, set it to the vector size so it doesn't go out of bounds
+                                if (printCount > yearRangeVec.size())
+                                {
+                                    printCount = yearRangeVec.size();
+                                }
+
+                                cout << "Printing the lowest " << printCount << " movies by Rating: \n"
+                                     << endl;
+
+                                for (size_t i = 0; i < printCount; i++)
+                                {
+                                    cout << yearRangeVec.at(i)->movieTitle << ": " << yearRangeVec.at(i)->rating << endl;
+                                }
+
+                                // exit the Rating sorting options
+                                break;
+
+                            } // End of ascending Rating sort
+                            else
+                            {
+                                cout << "Invalid input, please choose 1 or 2" << endl;
+                            }
+
+                        } // End while loop
                     }
                     else if (userInput == "5")
                     {
