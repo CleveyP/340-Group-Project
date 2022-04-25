@@ -65,6 +65,13 @@ int main()
                     cin >> resizeTo;
                 }
 
+                // If the user input is greater than the maximum size of the vector, set it to the max size so it doesn't go out of bounds
+                if (resizeTo > yearRangeVec.size())
+                {
+                    cout << "Your input was too high, but no matter, it has been changed to the maximum: " << yearRangeVec.size() << endl;
+                    resizeTo = yearRangeVec.size();
+                }
+
                 yearRangeVec.resize(resizeTo);
 
                 // Construct a vector of all cast members in those movies and store them in topCastList
@@ -102,6 +109,13 @@ int main()
                 {
                     cout << "Enter a count from 5 to " << yearRangeVec.size() << " : ";
                     cin >> resizeTo;
+                }
+
+                // If the user input is greater than the maximum size of the vector, set it to the max size so it doesn't go out of bounds
+                if (resizeTo > yearRangeVec.size())
+                {
+                    cout << "Your input was too high, but no matter, it has been changed to the maximum: " << yearRangeVec.size() << endl;
+                    resizeTo = yearRangeVec.size();
                 }
 
                 yearRangeVec.resize(resizeTo);
@@ -214,7 +228,7 @@ int main()
                             }
 
                         } // End while loop
-                    }// End of revenue sorting
+                    }     // End of revenue sorting
                     else if (userInput == "2")
                     {
                         cout << "You have chosen Profit sorting" << endl;
@@ -289,7 +303,7 @@ int main()
                             }
 
                         } // End while loop
-                        
+
                     } // End of profit sorting options
 
                     else if (userInput == "3")
@@ -474,7 +488,7 @@ int main()
 
                                 for (size_t i = 0; i < printCount; i++)
                                 {
-                                    cout << fixed << setprecision(0) << yearRangeVec.at(i)->movieTitle << ": " << (yearRangeVec.at(i)->revenue * yearRangeVec.at(i)->rating)/1000000 << endl;
+                                    cout << fixed << setprecision(0) << yearRangeVec.at(i)->movieTitle << ": " << (yearRangeVec.at(i)->revenue * yearRangeVec.at(i)->rating) / 1000000 << endl;
                                 }
 
                                 // exit the Popularity sorting options
@@ -503,7 +517,7 @@ int main()
 
                                 for (size_t i = 0; i < printCount; i++)
                                 {
-                                    cout << fixed << setprecision(0) << yearRangeVec.at(i)->movieTitle << ": " << (yearRangeVec.at(i)->revenue * yearRangeVec.at(i)->rating)/1000000 << endl;
+                                    cout << fixed << setprecision(0) << yearRangeVec.at(i)->movieTitle << ": " << (yearRangeVec.at(i)->revenue * yearRangeVec.at(i)->rating) / 1000000 << endl;
                                 }
 
                                 // exit the Popularity sorting options
@@ -519,6 +533,108 @@ int main()
                     }
                     else if (userInput == "6")
                     {
+                        cout << "You have chosen to Print EVERYTHING " << endl;
+                        cout << "Be warned that this output will likely be very long, are you sure?" << endl;
+                        while (stillRunning)
+                        {
+                            cout << "\nAre you sure?: \n";
+                            cout << "1  Yes, I want to see all the data\n";
+                            cout << "2  No, take me back\n";
+                            cin >> userInput;
+                            if (userInput == "1")
+                            {
+                                cout << "You have chosen Yes, I want to see all the data" << endl;
+
+                                // Set print count to the user input
+                                int printCount = 0;
+                                cout << "How many movies would you like to print information about?" << endl;
+                                while (printCount <= 0)
+                                {
+                                    cout << "Enter a count from 1 to " << yearRangeVec.size() << " : ";
+                                    cin >> printCount;
+                                }
+
+                                // If the user input is greater than the maximum size of the vector, set it to the max size so it doesn't go out of bounds
+                                if (printCount > yearRangeVec.size())
+                                {
+                                    cout << "Your input was too high, but no matter, it has been changed to the maximum: " << yearRangeVec.size() << endl;
+                                    printCount = yearRangeVec.size();
+                                }
+
+                                cout << "Printing all information from " << printCount << " movies: \n"
+                                     << endl;
+
+                                for (size_t i = 0; i < printCount; i++)
+                                {
+                                    cout << yearRangeVec.at(i)->movieTitle << endl;
+                                    cout << fixed << setprecision(0) << "Released in : " << yearRangeVec.at(i)->releaseDate << endl;
+                                    cout << "Directed by: " << yearRangeVec.at(i)->director << endl;
+                                    cout << "Genres: ";
+                                    // For the length of the genre list
+                                    for (size_t j = 0; j < yearRangeVec.at(i)->genres.size(); j++)
+                                    {
+                                        // Print all genres
+                                        // If on the last value, exclude the comma, otherwise include it
+                                        if (j == yearRangeVec.at(i)->genres.size() - 1)
+                                        {
+                                            cout << yearRangeVec.at(i)->genres.at(j) << " ";
+                                        }else{
+                                            cout << yearRangeVec.at(i)->genres.at(j) << ", ";
+                                        }
+                                    }
+                                    cout << endl;
+
+                                    cout << "Key Actors: ";
+                                    // For the length of the cast list
+                                    for (size_t j = 0; j < yearRangeVec.at(i)->cast.size(); j++)
+                                    {
+                                        // Print all actors
+
+                                        // If on the last value, exclude the comma, otherwise include it
+                                        if (j == yearRangeVec.at(i)->cast.size() - 1)
+                                        {
+                                            cout << yearRangeVec.at(i)->cast.at(j) << " ";
+                                        }else{
+                                            cout << yearRangeVec.at(i)->cast.at(j) << ", ";
+                                        }
+                                    }
+                                    cout << endl;
+
+                                    cout << fixed << setprecision(0) << "Revenue : $" << yearRangeVec.at(i)->revenue << endl;
+                                    cout << fixed << setprecision(0) << "Budget : $" << yearRangeVec.at(i)->budget << endl;
+                                    cout << fixed << setprecision(0) << "Profit : $" << (yearRangeVec.at(i)->revenue - yearRangeVec.at(i)->budget) << endl;
+                                    cout << fixed << setprecision(0) << "Popularity: " << (yearRangeVec.at(i)->revenue * yearRangeVec.at(i)->rating) / 1000000 << endl;
+                                    cout << "Average Rating : " << yearRangeVec.at(i)->rating << endl;
+                                    cout << "Number of total rating votes : " << yearRangeVec.at(i)->voteCount << endl;
+                                    cout << endl << endl; // spacer between movies
+                                }
+
+                                // exit the print all options
+                                break;
+
+                            } // End of Print all affirmative
+
+                            // Start of print all negative
+                            else if (userInput == "2")
+                            {
+                                cout << "You have chosen No, take me back" << endl;
+
+                                cout << "Returning to additional options menu..." << endl;
+                                // Reset user input and break, should return to additional options menu
+                                userInput == "";
+                                break;
+
+                            } // End of return to previous menu
+                            else
+                            {
+                                cout << "Invalid input, please choose 1 or 2" << endl;
+                            }
+
+                        } // End while loop
+
+                    } // end of Print everything
+                    else if (userInput == "7")
+                    {
                         cout << "Returning to main menu..." << endl;
                         // Reset user input and break, should return to main menu
                         userInput == "";
@@ -526,7 +642,7 @@ int main()
                     }
                     else
                     {
-                        cout << "Your input was invalid. Please enter a number from 1 - 6" << endl;
+                        cout << "Your input was invalid. Please enter a number from 1 - 7" << endl;
                     }
 
                 } // End alt menu while loop

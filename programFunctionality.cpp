@@ -65,7 +65,8 @@ void displayAltMenu(){
     cout << "3  Release date (by year)" << endl;
     cout << "4  Rating" << endl;
     cout << "5  Popularity - (Revenue times Rating)" << endl;
-    cout << "6  Back to main menu" << endl;
-    cout << "\nWhat would you like to do? Enter number (1-6): ";
+    cout << "6  Print EVERYTHING (All of the above and more...)" << endl;
+    cout << "7  Back to main menu" << endl;
+    cout << "\nWhat would you like to do? Enter number (1-7): ";
 
 }
