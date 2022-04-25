@@ -157,7 +157,6 @@ int main()
                                 // Call descending revenue sort to sort the vector by revenue high-to-low
                                 yearRangeVec = descendingRevenueSort(yearRangeVec);
                                 cout << "The vector has been sorted by by revenue in descending order." << endl;
-        
 
                                 // Default to printing 20 in the upcoming print loop
                                 int printCount = 20;
@@ -167,8 +166,9 @@ int main()
                                 {
                                     printCount = yearRangeVec.size();
                                 }
-                                
-                                cout << "Printing the highest " << printCount << " movies by revenue: \n" << endl;
+
+                                cout << "Printing the highest " << printCount << " movies by revenue: \n"
+                                     << endl;
 
                                 for (size_t i = 0; i < printCount; i++)
                                 {
@@ -186,7 +186,6 @@ int main()
                                 // Call ascending revenue sort to sort the vector by revenue high-to-low
                                 yearRangeVec = ascendingRevenueSort(yearRangeVec);
                                 cout << "The vector has been sorted by by revenue in ascending order." << endl;
-        
 
                                 // Default to printing 20 in the upcoming print loop
                                 int printCount = 20;
@@ -196,8 +195,9 @@ int main()
                                 {
                                     printCount = yearRangeVec.size();
                                 }
-                                
-                                cout << "Printing the lowest " << printCount << " movies by revenue: \n" << endl;
+
+                                cout << "Printing the lowest " << printCount << " movies by revenue: \n"
+                                     << endl;
 
                                 for (size_t i = 0; i < printCount; i++)
                                 {
@@ -213,12 +213,85 @@ int main()
                                 cout << "Invalid input, please choose 1 or 2" << endl;
                             }
 
-                        } // End Revenue sorting options
-                    }
+                        } // End while loop
+                    }// End of revenue sorting
                     else if (userInput == "2")
                     {
                         cout << "You have chosen Profit sorting" << endl;
-                    }
+                        userInput = "";
+                        while (stillRunning)
+                        {
+                            cout << "\nThere are two sorting options for Profit Sorting: \n";
+                            cout << "1  High-to-Low (Descending order)\n";
+                            cout << "2  Low-to-High (Ascending order)\n";
+                            cin >> userInput;
+                            if (userInput == "1")
+                            {
+                                cout << "You have chosen High-to-Low (Descending order)" << endl;
+
+                                // Call descending profit sort to sort the vector by profit high-to-low
+                                yearRangeVec = descendingProfitSort(yearRangeVec);
+                                cout << "The vector has been sorted by by profit in descending order." << endl;
+
+                                // Default to printing 20 in the upcoming print loop
+                                int printCount = 20;
+
+                                // However if 20 is larger than the vector size, set it to the vector size so it doesn't go out of bounds
+                                if (printCount > yearRangeVec.size())
+                                {
+                                    printCount = yearRangeVec.size();
+                                }
+
+                                cout << "Printing the highest " << printCount << " movies by profit: \n"
+                                     << endl;
+
+                                for (size_t i = 0; i < printCount; i++)
+                                {
+                                    cout << fixed << setprecision(0) << yearRangeVec.at(i)->movieTitle << ": $" << (yearRangeVec.at(i)->revenue - yearRangeVec.at(i)->budget) << endl;
+                                }
+
+                                // exit the profit sorting options
+                                break;
+
+                            } // End of descending profit sort...
+                            else if (userInput == "2")
+                            {
+                                cout << "You have chosen Low-to-High (Ascending order)" << endl;
+
+                                // Call ascending profit sort to sort the vector by profit high-to-low
+                                yearRangeVec = ascendingProfitSort(yearRangeVec);
+                                cout << "The vector has been sorted by by profit in ascending order." << endl;
+
+                                // Default to printing 20 in the upcoming print loop
+                                int printCount = 20;
+
+                                // However if 20 is larger than the vector size, set it to the vector size so it doesn't go out of bounds
+                                if (printCount > yearRangeVec.size())
+                                {
+                                    printCount = yearRangeVec.size();
+                                }
+
+                                cout << "Printing the lowest " << printCount << " movies by profit: \n"
+                                     << endl;
+
+                                for (size_t i = 0; i < printCount; i++)
+                                {
+                                    cout << fixed << setprecision(0) << yearRangeVec.at(i)->movieTitle << ": $" << (yearRangeVec.at(i)->revenue - yearRangeVec.at(i)->budget) << endl;
+                                }
+
+                                // exit the profit sorting options
+                                break;
+
+                            } // End of ascending profit sort
+                            else
+                            {
+                                cout << "Invalid input, please choose 1 or 2" << endl;
+                            }
+
+                        } // End while loop
+                        
+                    } // End of profit sorting options
+
                     else if (userInput == "3")
                     {
                         cout << "You have chosen Release date sorting" << endl;
