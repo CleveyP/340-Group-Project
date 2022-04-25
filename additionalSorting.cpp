@@ -183,7 +183,7 @@ vector<combinedMovieStruct *> ascendingProfitSort(vector<combinedMovieStruct *> 
 // ___Release year sorting ___
 
 // Calls the sort function with starting point of the beginning of the vector of structs and ending at the end of it, with a sorting type of high to low (descending)
-vector<combinedMovieStruct *> descendingYearSort(vector<combinedMovieStruct *> inputVector)
+vector<combinedMovieStruct *> descendingReleaseYearSort(vector<combinedMovieStruct *> inputVector)
 {
 
     sort(inputVector.begin(), inputVector.end(), descendingYears);
@@ -193,7 +193,7 @@ vector<combinedMovieStruct *> descendingYearSort(vector<combinedMovieStruct *> i
 }
 
 // Calls the sort function with starting point of the beginning of the vector of structs and ending at the end of it, with a sorting type of low to high (ascending)
-vector<combinedMovieStruct *> ascendingYearSort(vector<combinedMovieStruct *> inputVector)
+vector<combinedMovieStruct *> ascendingReleaseYearSort(vector<combinedMovieStruct *> inputVector)
 {
     sort(inputVector.begin(), inputVector.end(), ascendingYears);
 

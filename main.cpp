@@ -295,6 +295,77 @@ int main()
                     else if (userInput == "3")
                     {
                         cout << "You have chosen Release date sorting" << endl;
+                        userInput = "";
+                        while (stillRunning)
+                        {
+                            cout << "\nThere are two sorting options for release date sorting: \n";
+                            cout << "1  High-to-Low (Descending order)\n";
+                            cout << "2  Low-to-High (Ascending order)\n";
+                            cin >> userInput;
+                            if (userInput == "1")
+                            {
+                                cout << "You have chosen High-to-Low (Descending order)" << endl;
+
+                                // Call descending release date sort to sort the vector by release date high-to-low
+                                yearRangeVec = descendingReleaseYearSort(yearRangeVec);
+                                cout << "The vector has been sorted by by release date in descending order." << endl;
+
+                                // Default to printing 20 in the upcoming print loop
+                                int printCount = 20;
+
+                                // However if 20 is larger than the vector size, set it to the vector size so it doesn't go out of bounds
+                                if (printCount > yearRangeVec.size())
+                                {
+                                    printCount = yearRangeVec.size();
+                                }
+
+                                cout << "Printing the most recent " << printCount << " movies by release year: \n"
+                                     << endl;
+
+                                for (size_t i = 0; i < printCount; i++)
+                                {
+                                    cout << fixed << setprecision(0) << yearRangeVec.at(i)->movieTitle << ": " << yearRangeVec.at(i)->releaseDate << endl;
+                                }
+
+                                // exit the release date sorting options
+                                break;
+
+                            } // End of descending release date sort...
+                            else if (userInput == "2")
+                            {
+                                cout << "You have chosen Low-to-High (Ascending order)" << endl;
+
+                                // Call ascending release date sort to sort the vector by release date high-to-low
+                                yearRangeVec = ascendingReleaseYearSort(yearRangeVec);
+                                cout << "The vector has been sorted by by release date in ascending order." << endl;
+
+                                // Default to printing 20 in the upcoming print loop
+                                int printCount = 20;
+
+                                // However if 20 is larger than the vector size, set it to the vector size so it doesn't go out of bounds
+                                if (printCount > yearRangeVec.size())
+                                {
+                                    printCount = yearRangeVec.size();
+                                }
+
+                                cout << "Printing the oldest " << printCount << " movies by release year: \n"
+                                     << endl;
+
+                                for (size_t i = 0; i < printCount; i++)
+                                {
+                                    cout << fixed << setprecision(0) << yearRangeVec.at(i)->movieTitle << ": " << yearRangeVec.at(i)->releaseDate << endl;
+                                }
+
+                                // exit the release date sorting options
+                                break;
+
+                            } // End of ascending release date sort
+                            else
+                            {
+                                cout << "Invalid input, please choose 1 or 2" << endl;
+                            }
+
+                        } // End while loop
                     }
                     else if (userInput == "4")
                     {
