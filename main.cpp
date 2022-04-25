@@ -445,6 +445,77 @@ int main()
                     else if (userInput == "5")
                     {
                         cout << "You have chosen Popularity sorting" << endl;
+                        userInput = "";
+                        while (stillRunning)
+                        {
+                            cout << "\nThere are two sorting options for Popularity Sorting: \n";
+                            cout << "1  High-to-Low (Descending order)\n";
+                            cout << "2  Low-to-High (Ascending order)\n";
+                            cin >> userInput;
+                            if (userInput == "1")
+                            {
+                                cout << "You have chosen High-to-Low (Descending order)" << endl;
+
+                                // Call descending Popularity sort to sort the vector by Popularity high-to-low
+                                yearRangeVec = descendingPopularitySort(yearRangeVec);
+                                cout << "The vector has been sorted by by Popularity in descending order." << endl;
+
+                                // Default to printing 20 in the upcoming print loop
+                                int printCount = 20;
+
+                                // However if 20 is larger than the vector size, set it to the vector size so it doesn't go out of bounds
+                                if (printCount > yearRangeVec.size())
+                                {
+                                    printCount = yearRangeVec.size();
+                                }
+
+                                cout << "Printing the highest " << printCount << " movies by Popularity: \n"
+                                     << endl;
+
+                                for (size_t i = 0; i < printCount; i++)
+                                {
+                                    cout << fixed << setprecision(0) << yearRangeVec.at(i)->movieTitle << ": " << (yearRangeVec.at(i)->revenue * yearRangeVec.at(i)->rating)/1000000 << endl;
+                                }
+
+                                // exit the Popularity sorting options
+                                break;
+
+                            } // End of descending Popularity sort...
+                            else if (userInput == "2")
+                            {
+                                cout << "You have chosen Low-to-High (Ascending order)" << endl;
+
+                                // Call ascending Popularity sort to sort the vector by Popularity high-to-low
+                                yearRangeVec = ascendingPopularitySort(yearRangeVec);
+                                cout << "The vector has been sorted by by Popularity in ascending order." << endl;
+
+                                // Default to printing 20 in the upcoming print loop
+                                int printCount = 20;
+
+                                // However if 20 is larger than the vector size, set it to the vector size so it doesn't go out of bounds
+                                if (printCount > yearRangeVec.size())
+                                {
+                                    printCount = yearRangeVec.size();
+                                }
+
+                                cout << "Printing the lowest " << printCount << " movies by Popularity: \n"
+                                     << endl;
+
+                                for (size_t i = 0; i < printCount; i++)
+                                {
+                                    cout << fixed << setprecision(0) << yearRangeVec.at(i)->movieTitle << ": " << (yearRangeVec.at(i)->revenue * yearRangeVec.at(i)->rating)/1000000 << endl;
+                                }
+
+                                // exit the Popularity sorting options
+                                break;
+
+                            } // End of ascending Popularity sort
+                            else
+                            {
+                                cout << "Invalid input, please choose 1 or 2" << endl;
+                            }
+
+                        } // End while loop
                     }
                     else if (userInput == "6")
                     {
