@@ -170,7 +170,7 @@ string whoIsDirector(string extractFromThisString)
 }
 
 // Function to extract only specific year range structs from a vector and put them in a new vector which is returned
-vector<combinedMovieStruct *> limitedYearsStructVec(vector<combinedMovieStruct *> inputStructVec, int startYear, int endYear)
+vector<combinedMovieStruct *> limitYearRangeOfStructVec(vector<combinedMovieStruct *> inputStructVec, int startYear, int endYear)
 {
     // Create a new vector of structs which we will return later once it is filled
     vector<combinedMovieStruct *> rangedStructVec = {};

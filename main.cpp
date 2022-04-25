@@ -18,105 +18,76 @@ using namespace std;
 #include "actorFreqCounter.cpp"
 #include "additionalSorting.cpp" // Additional sorting also includes tsvReaderMergedFunction: which is the way to convert the database files into a usable vector of structs
 #include "genreFreqCounter.cpp"
+#include "programFunctionality.cpp"
 
 int main()
 {
     // Store the primary struct resulting from the conversion of the two tsv files into a variable for use in functions later
     vector<combinedMovieStruct *> primaryStructVector = createPrimaryVectorOfStructs();
+    cout << "Primary struct vector is complete" << endl;
+    cout << "\nWelcome to the movie database processor" << endl;
+    cout << "This database ranges from 1916 to 2017, note that some years in this database have no movies." << endl;
+    cout << "To begin, first enter a starting year" << endl
+         << endl;
 
-    // Create a vector of structs consisting of only movies within the year range 1990 - 1999
-    vector<combinedMovieStruct *> ninetiesMoviesVec = limitedYearsStructVec(primaryStructVector, 1990, 1999);
+    string userInput = "";
+    int startingYear = 0;
+    int endingYear = 0;
+    vector<combinedMovieStruct *> yearRangeVec = {};
+    bool stillRunning = true;
 
-    /* Earlier testing
-    // Create the list of all actors in the above nineties movies struct vector
-    vector<string> megaCastList = constructMegaCastList(ninetiesMoviesVec);
+    // Request the input year range via function
+    requestYearRange(startingYear, endingYear);
 
-    // Print all release years in the nineties movies vector to see if it worked
-    for (size_t currentIndex = 0; currentIndex < ninetiesMoviesVec.size(); currentIndex++)
+    // Create a new struct limited to the input year range
+    applyYearRange(primaryStructVector, yearRangeVec, startingYear, endingYear);
+
+    while (stillRunning)
     {
-        cout << ninetiesMoviesVec.at(currentIndex)->movieTitle << ": " << ninetiesMoviesVec.at(currentIndex)->releaseDate << endl;
-    }
 
-    // Print the frequency list of all actors within the year range above
-    vector<Actor> resultOfSort = sortedActorFreqVec(megaCastList);
-    printFreqVec(resultOfSort);
 
-    // Previous revenue sorting testing
-    vector<combinedMovieStruct *> ninetiesMoviesVecByRevenue = ascendingRevenueSort(ninetiesMoviesVec);
-    for (size_t currentIndex = 0; currentIndex < ninetiesMoviesVecByRevenue.size(); currentIndex++)
-    {
-        cout << fixed << setprecision(0) << ninetiesMoviesVecByRevenue.at(currentIndex)->movieTitle << ": " << ninetiesMoviesVecByRevenue.at(currentIndex)->revenue << endl;
-    }
-
-    */
-
-    vector<combinedMovieStruct *> ninetiesMoviesVecByRevenue = descendingRevenueSort(ninetiesMoviesVec);
-
-    // Resize the 90's movies by revenue to only be the first 30 movies in that vector
-    // Then build a cast list out of all actors in those top 30 movies by revenue
-    // Then sort that list by frequency
-    // Then print out that sorted list
-    ninetiesMoviesVecByRevenue.resize(30);
-    vector<string> ninetiesCastList = constructMegaCastList(ninetiesMoviesVecByRevenue);
-    vector<Actor> sortedNinetiesCast = sortedActorFreqVec(ninetiesCastList);
-    printFreqVec(sortedNinetiesCast);
+    } // While !exit loop
 
     /*
-    cout << "Now printing those top 30 movies by revenue by descending release date: " << endl;
-    vector<combinedMovieStruct *> ninetiesMoviesTop30ByYear = descendingYearSort(ninetiesMoviesVecByRevenue);
-    for (size_t i = 0; i < ninetiesMoviesTop30ByYear.size(); i++)
-    {
-        cout << ninetiesMoviesTop30ByYear.at(i)->movieTitle << ": " << ninetiesMoviesTop30ByYear.at(i)->releaseDate << endl;
-    }
+        for (size_t i = 0; i < yearRangeVec.size(); i++)
+        {
+            cout << yearRangeVec.at(i)->movieTitle << ": " << yearRangeVec.at(i)->releaseDate << endl;
+        }
     */
 
-    // Debugging genre counter
-    // For the length of the overall struct vector...
-    for (size_t i = 0; i < ninetiesMoviesVecByRevenue.size(); i++)
-    {
-        // Print the movie title at the current index in the struct vector
-        cout << ninetiesMoviesVecByRevenue.at(i)->movieTitle << ": ";
+    /*
+        cout << "Limiting the database to " << startingYear << " - " << endingYear << endl;
+        yearRangeVec = limitYearRangeOfStructVec(primaryStructVector, startingYear, endingYear);
+        cout << "Database year range applied" << endl;
+        */
 
-        // For the length of the current index genre vector...
-        for (size_t j = 0; j < ninetiesMoviesVecByRevenue.at(i)->genres.size(); j++)
+    /* Earlier testing
+        // Create the list of all actors in the above nineties movies struct vector
+        vector<string> megaCastList = constructMegaCastList(ninetiesMoviesVec);
+
+        // Print all release years in the nineties movies vector to see if it worked
+        for (size_t currentIndex = 0; currentIndex < ninetiesMoviesVec.size(); currentIndex++)
         {
-            // Print out each genre in that genre vector
-            cout << ninetiesMoviesVecByRevenue.at(i)->genres.at(j) << ", ";
+            cout << ninetiesMoviesVec.at(currentIndex)->movieTitle << ": " << ninetiesMoviesVec.at(currentIndex)->releaseDate << endl;
         }
 
-        cout << endl;
-    }
+        // Print the frequency list of all actors within the year range above
+        vector<Actor> resultOfSort = sortedActorFreqVec(megaCastList);
+        printFreqVec(resultOfSort);
 
-    vector<string> ninetiesTopGenres = constructMegaGenreList(ninetiesMoviesVecByRevenue);
-    cout << "\n \n Beginning genres printing: \n";
-    for (size_t i = 0; i < ninetiesTopGenres.size(); i++)
-    {
-        cout << ninetiesTopGenres.at(i) << ", ";
-    }
+        // Previous revenue sorting testing
+        vector<combinedMovieStruct *> ninetiesMoviesVecByRevenue = ascendingRevenueSort(ninetiesMoviesVec);
+        for (size_t currentIndex = 0; currentIndex < ninetiesMoviesVecByRevenue.size(); currentIndex++)
+        {
+            cout << fixed << setprecision(0) << ninetiesMoviesVecByRevenue.at(currentIndex)->movieTitle << ": " << ninetiesMoviesVecByRevenue.at(currentIndex)->revenue << endl;
+        }
 
-    cout << "\n\nSize of ninetiesTopGenres before: " << ninetiesTopGenres.size() << endl;
-    vector<Genre> sortedNinetiesGenres = sortGenreFreqVec(ninetiesTopGenres);
-    cout << "Size of ninetiesTopGenres after: " << ninetiesTopGenres.size() << endl;
 
-    cout << "Number of different Genres found: " << sortedNinetiesGenres.size() << endl
-         << endl;
-    printFreqVec(sortedNinetiesGenres);
 
-    // Testing rating sort
-    cout << "\nNow printing those (top 30 movies by revenue) by descending ratings: " << endl;
-    vector<combinedMovieStruct *> ninetiesMoviesTop30Rated = descendingRatingsSort(ninetiesMoviesVecByRevenue);
-    for (size_t i = 0; i < ninetiesMoviesTop30Rated.size(); i++)
-    {
-        cout << ninetiesMoviesTop30Rated.at(i)->movieTitle << ": " << ninetiesMoviesTop30Rated.at(i)->rating << endl;
-    }
 
-    // Testing popularity sort
-    cout << "\nNow printing those (top 30 movies by revenue) by descending popularity: " << endl;
-    vector<combinedMovieStruct *> ninetiesMoviesTop30Popularity = descendingPopularitySort(ninetiesMoviesVecByRevenue);
-    for (size_t i = 0; i < ninetiesMoviesTop30Popularity.size(); i++)
-    {
-        cout << fixed << setprecision(0) << ninetiesMoviesTop30Popularity.at(i)->movieTitle << ": " << (ninetiesMoviesTop30Popularity.at(i)->revenue * ninetiesMoviesTop30Popularity.at(i)->rating) << endl;
-    }
+
+
+        */
 
     /* Profit sorting testing
      vector<combinedMovieStruct *> ninetiesMoviesVecByRevenue = descendingProfitSort(ninetiesMoviesVec);
