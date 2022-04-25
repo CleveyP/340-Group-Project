@@ -29,7 +29,7 @@ void requestYearRange(int &startingYear, int &endingYear)
         cout << "Enter an ending year from " << startingYear << " to 2017: ";
         cin >> endingYear; // Insert user input into ending year variable
     }
-        cout << "\nYear range designated as: " << startingYear << " to " << endingYear << endl << endl;    
+        //cout << "\nYear range designated as: " << startingYear << " to " << endingYear << endl << endl;    
 
 }
 
@@ -43,26 +43,40 @@ void applyYearRange(vector<combinedMovieStruct *> primaryStructVector, vector<co
 
 
 // This function will print the list of options
-void displayMenu(){
+void displayMainMenu(){
     cout << "Main Menu" << endl;
     cout << "__________" << endl;
 
-    cout << "\nWhat would you like to do? Enter number (1-5):" << endl;
     cout << "1  Most common actors in the highest grossing movies from this period?" << endl;
     cout << "2  Which genres of movies were most popular during this time period?" << endl;
     cout << "3  Additional Sorting Options! (Revenue, Popularity, Budget, Rating, etc)" << endl;
     cout << "4  Choose a new year range" << endl;
     cout << "5  Quit - Exit - GET ME OUT OF HERE!" << endl;
+    cout << "\nWhat would you like to do? Enter number (1-5):" << endl;
 
     
 }
 
 // This function will print the alternative sorting menu (accessed via option 3 on main menu)
 void displayAltMenu(){
-    cout << "Welcome to the alternative sorting option menu. Enter a number (1-5)\n" << endl;
+    cout << "Welcome to the alternative sorting option menu.\n" << endl;
     cout << "1  Revenue" << endl;
     cout << "2  Profit - (Budget minus Revenue)" << endl;
     cout << "3  Release date (by year)" << endl;
     cout << "4  Rating" << endl;
     cout << "5  Popularity - (Revenue times Rating)" << endl;
+    cout << "\nWhat would you like to do? Enter number (1-5):" << endl;
+
+}
+
+void processInput(string userInput){
+    if (userInput == "1" || userInput == "2"|| userInput == "3"|| userInput == "4"|| userInput == "5")
+    {
+        
+    }else{
+        cout << "Your input was invalid. Please enter a number from 1 - 5: ";
+        cin >> userInput;
+    }
+    
+
 }

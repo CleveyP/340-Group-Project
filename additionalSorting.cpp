@@ -241,7 +241,7 @@ vector<combinedMovieStruct *> ascendingRatingsSort(vector<combinedMovieStruct *>
 // ___ Popularity (Revenue * rating) sorting ___
 
 // Calls the sort function with starting point of the beginning of the vector of structs and ending at the end of it, with a sorting type of high to low (descending)
-vector<combinedMovieStruct *> descendingPopularitySort(vector<combinedMovieStruct *> inputVector)
+vector<combinedMovieStruct *> descendingPopularitySort(vector<combinedMovieStruct *> &inputVector)
 {
 
     sort(inputVector.begin(), inputVector.end(), descendingPopularity);
@@ -251,7 +251,7 @@ vector<combinedMovieStruct *> descendingPopularitySort(vector<combinedMovieStruc
 }
 
 // Calls the sort function with starting point of the beginning of the vector of structs and ending at the end of it, with a sorting type of low to high (ascending)
-vector<combinedMovieStruct *> ascendingPopularitySort(vector<combinedMovieStruct *> inputVector)
+vector<combinedMovieStruct *> ascendingPopularitySort(vector<combinedMovieStruct *> &inputVector)
 {
     sort(inputVector.begin(), inputVector.end(), ascendingPopularity);
 

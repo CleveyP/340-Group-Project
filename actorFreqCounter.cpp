@@ -125,7 +125,7 @@ void printFreqVec(vector<Actor> actorVec)
 // Then extracts each actor from the input cast vector and adds them to the vector of actor types
 // Then sorts that populated vector of actor types by frequency value, highest first
 // Then returns the sorted vector
-vector<Actor> sortedActorFreqVec(vector<string> inputMegaCastVec)
+vector<Actor> generateActorFreqVec(vector<string> inputMegaCastVec)
 {
     // Empty vector of actors to store the results of add_Actors
     vector<Actor> actorFreqVec;
@@ -152,7 +152,7 @@ int main()
     inputMegaCastVec.push_back("CLTurtle");
     inputMegaCastVec.push_back("Azi");
 
-    vector<Actor> resultOfSort = sortedActorFreqVec(inputMegaCastVec);
+    vector<Actor> resultOfSort = generateActorFreqVec(inputMegaCastVec);
     printFreqVec(resultOfSort);
 
     return 0;
