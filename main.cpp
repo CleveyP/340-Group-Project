@@ -534,7 +534,83 @@ int main()
 
                         } // End while loop
                     }
+                    // Runtime sorting
                     else if (userInput == "6")
+                    {
+                        cout << "You have chosen Runtime sorting" << endl;
+                        userInput = "";
+                        while (stillRunning)
+                        {
+                            cout << "\nThere are two sorting options for Runtime Sorting: \n";
+                            cout << "1  High-to-Low (Descending order)\n";
+                            cout << "2  Low-to-High (Ascending order)\n";
+                            cin >> userInput;
+                            if (userInput == "1")
+                            {
+                                cout << "You have chosen High-to-Low (Descending order)" << endl;
+
+                                // Call descending Runtime sort to sort the vector by Runtime high-to-low
+                                yearRangeVec = descendingRuntimeSort(yearRangeVec);
+                                cout << "The vector has been sorted by by Runtime in descending order." << endl;
+
+                                // Default to printing 20 in the upcoming print loop
+                                int printCount = 20;
+
+                                // However if 20 is larger than the vector size, set it to the vector size so it doesn't go out of bounds
+                                if (printCount > yearRangeVec.size())
+                                {
+                                    printCount = yearRangeVec.size();
+                                }
+
+                                cout << "Printing the longest " << printCount << " movies by Runtime: \n"
+                                     << endl;
+
+                                for (size_t i = 0; i < printCount; i++)
+                                {
+                                    cout << yearRangeVec.at(i)->movieTitle << ": " << yearRangeVec.at(i)->runtime << " minutes" << endl;
+                                }
+
+                                // exit the Runtime sorting options
+                                break;
+
+                            } // End of descending Runtime sort...
+                            else if (userInput == "2")
+                            {
+                                cout << "You have chosen Low-to-High (Ascending order)" << endl;
+
+                                // Call ascending Runtime sort to sort the vector by Runtime high-to-low
+                                yearRangeVec = ascendingRuntimeSort(yearRangeVec);
+                                cout << "The vector has been sorted by by Runtime in ascending order." << endl;
+
+                                // Default to printing 20 in the upcoming print loop
+                                int printCount = 20;
+
+                                // However if 20 is larger than the vector size, set it to the vector size so it doesn't go out of bounds
+                                if (printCount > yearRangeVec.size())
+                                {
+                                    printCount = yearRangeVec.size();
+                                }
+
+                                cout << "Printing the shortest " << printCount << " movies by Runtime: \n"
+                                     << endl;
+
+                                for (size_t i = 0; i < printCount; i++)
+                                {
+                                    cout << yearRangeVec.at(i)->movieTitle << ": " << yearRangeVec.at(i)->runtime << " minutes" << endl;
+                                }
+
+                                // exit the Runtime sorting options
+                                break;
+
+                            } // End of ascending Runtime sort
+                            else
+                            {
+                                cout << "Invalid input, please choose 1 or 2" << endl;
+                            }
+
+                        } // End while loop
+                    }
+                    else if (userInput == "7")
                     {
                         cout << "You have chosen to Print EVERYTHING " << endl;
                         cout << "Be warned that this output will likely be very long, are you sure?" << endl;
@@ -642,7 +718,7 @@ int main()
                         } // End while loop
 
                     } // end of Print everything
-                    else if (userInput == "7")
+                    else if (userInput == "8")
                     {
                         cout << "Returning to main menu..." << endl;
                         // Reset user input and break, should return to main menu
@@ -651,7 +727,7 @@ int main()
                     }
                     else
                     {
-                        cout << "Your input was invalid. Please enter a number from 1 - 7" << endl;
+                        cout << "Your input was invalid. Please enter a number from 1 - 8" << endl;
                     }
 
                 } // End alt menu while loop

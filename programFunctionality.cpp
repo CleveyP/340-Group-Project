@@ -49,7 +49,7 @@ void displayMainMenu(){
 
     cout << "1  Most common actors in the highest grossing movies from this period?" << endl;
     cout << "2  Which genres of movies were most popular during this time period?" << endl;
-    cout << "3  Additional Sorting Options! (Revenue, Profit, Release Year, Rating, Popularity)" << endl;
+    cout << "3  Additional Sorting Options! (Revenue, Profit, Release Year, Rating, Popularity, Runtime, ALL)" << endl;
     cout << "4  Choose a new year range" << endl;
     cout << "5  Quit - Exit - GET ME OUT OF HERE!" << endl;
     cout << "\nWhat would you like to do? Enter number (1-5): ";
@@ -65,8 +65,9 @@ void displayAltMenu(){
     cout << "3  Release date (by year)" << endl;
     cout << "4  Rating" << endl;
     cout << "5  Popularity - (Revenue times Rating)" << endl;
-    cout << "6  Print EVERYTHING (All of the above and more...)" << endl;
-    cout << "7  Back to main menu" << endl;
+    cout << "6  Movie Runtime in minutes" << endl;
+    cout << "7  Print EVERYTHING (All of the above and more...)" << endl;
+    cout << "8  Back to main menu" << endl;
     cout << "\nWhat would you like to do? Enter number (1-7): ";
 
 }
