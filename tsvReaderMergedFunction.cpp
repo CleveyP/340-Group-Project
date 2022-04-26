@@ -27,7 +27,7 @@ struct combinedMovieStruct
     int runtime = 0;            // col 5 movie runtime in minutes
     int releaseDate = 0;        // col 6 movie's release date
     double rating = 0;          // col 7 movie average rating
-    int voteCount = 0;          // col 8 store number of votes towards the rating?
+    int voteCount = 0;          // col 8 store number of votes towards the rating
     // __________________________________
 
     // Data values from credits.csv

@@ -569,6 +569,7 @@ int main()
                                     cout << yearRangeVec.at(i)->movieTitle << endl;
                                     cout << fixed << setprecision(0) << "Released in : " << yearRangeVec.at(i)->releaseDate << endl;
                                     cout << "Directed by: " << yearRangeVec.at(i)->director << endl;
+                                    cout << "Runtime: " << yearRangeVec.at(i)->runtime << " minutes " << endl;
                                     cout << "Genres: ";
                                     // For the length of the genre list
                                     for (size_t j = 0; j < yearRangeVec.at(i)->genres.size(); j++)
