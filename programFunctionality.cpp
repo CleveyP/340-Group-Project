@@ -42,7 +42,7 @@ void applyYearRange(vector<combinedMovieStruct *> primaryStructVector, vector<co
 }
 
 
-// This function will print the list of options
+// This function will print the list of options in the main menu
 void displayMainMenu(){
     cout << "\nMain Menu" << endl;
     cout << "__________" << endl;

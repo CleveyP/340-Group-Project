@@ -109,6 +109,7 @@ vector<Genre> generateGenreFreqVec(vector<string> inputMegaGenreVec)
 
     add_Genres(inputMegaGenreVec, genreFreqVec); // Then extracts each genre from the input cast vector and adds them to the vector of genre types
 
+    // Sort the vector by highest frequency, save it, and then return it
     genreFreqVec = genreHighFreqSort(genreFreqVec);
     return genreFreqVec;
 }

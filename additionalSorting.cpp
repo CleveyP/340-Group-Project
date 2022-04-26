@@ -122,6 +122,28 @@ bool boolAscendingPopularity(combinedMovieStruct *&struct1, combinedMovieStruct 
 
 */
 
+// _____________ Runtime value sorting booleans _____________
+
+// Quick comparison of two runtime values for use in the sort by High to Low sort function
+bool boolDescendingRuntime(combinedMovieStruct *&struct1, combinedMovieStruct *&struct2)
+{
+    return struct1->runtime > struct2->runtime;
+}
+
+// Quick comparison of two runtime values for use in the sort by Low to High sort function
+bool boolAscendingRuntime(combinedMovieStruct *&struct1, combinedMovieStruct *&struct2)
+{
+    return struct1->runtime < struct2->runtime;
+}
+
+/*
+
+
+
+
+
+*/
+
 // _____________ Actual sorting functions _____________
 
 // ___Revenue sorting ___
@@ -255,6 +277,34 @@ vector<combinedMovieStruct *> descendingPopularitySort(vector<combinedMovieStruc
 vector<combinedMovieStruct *> ascendingPopularitySort(vector<combinedMovieStruct *> &inputVector)
 {
     sort(inputVector.begin(), inputVector.end(), boolAscendingPopularity);
+
+    // Return the sorted vector of structs
+    return inputVector;
+}
+
+/*
+
+
+
+
+*/
+
+// ___Runtime sorting ___
+
+// Sorts an input movie struct vector by runtime with a sorting type of high to low (descending)
+vector<combinedMovieStruct *> descendingRuntimeSort(vector<combinedMovieStruct *> inputVector)
+{
+
+    sort(inputVector.begin(), inputVector.end(), boolDescendingRuntime);
+
+    // Return the sorted vector of structs
+    return inputVector;
+}
+
+// Sorts an input movie struct vector by runtime with a sorting type of low to high (ascending)
+vector<combinedMovieStruct *> ascendingRuntimeSort(vector<combinedMovieStruct *> inputVector)
+{
+    sort(inputVector.begin(), inputVector.end(), boolAscendingRuntime);
 
     // Return the sorted vector of structs
     return inputVector;

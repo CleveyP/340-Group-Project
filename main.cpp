@@ -2,34 +2,36 @@
 Stephen Martel
 4/21/2022
 
-New main file for consolidating the existing and upcoming functions into one main
+New main file for consolidating the existing functions into one main
+Now runs as a program that can take inputs!
 
 */
 
-#include <fstream>
-#include <iostream>
-#include <string>
-#include <sstream>
-#include <vector>
-#include <iomanip>
+#include <fstream>  // Include file stream so we can access files
+#include <iostream> // Include input-output stream so we can take inputs and display outputs
+#include <string>   // Include string so we can have more control over strings
+#include <sstream>  // Include stringstream just in case it's needed
+#include <vector>   // Include vector because this whole program is reliant on vectors of objects
+#include <iomanip>  // Include input-output manipulation so we can use fixed and setprecision(#)
 
-using namespace std;
+using namespace std; // Namespace standard because we don't need anything else
 
-#include "actorFreqCounter.cpp"
-#include "additionalSorting.cpp" // Additional sorting also includes tsvReaderMergedFunction: which is the way to convert the database files into a usable vector of structs
-#include "genreFreqCounter.cpp"
-#include "programFunctionality.cpp"
+#include "actorFreqCounter.cpp"     // Includes functions that can count the frequency of actors in a string vector
+#include "additionalSorting.cpp"    // Additional sorting also includes tsvReaderMergedFunction: which is the way to convert the database files into a usable vector of structs
+#include "genreFreqCounter.cpp"     // Includes functions that can count the frequency of genres in a string vector
+#include "programFunctionality.cpp" // Includes functions that help this program run and take inputs instead of the previous version's static inputs
 
 int main()
 {
     // Store the primary struct resulting from the conversion of the two tsv files into a variable for use in functions later
     vector<combinedMovieStruct *> primaryStructVector = createPrimaryVectorOfStructs();
     cout << "Primary struct vector is complete" << endl;
-    cout << "\nWelcome to the movie database processor" << endl;
+    cout << "\nWelcome to the Movie Database processor" << endl;
     cout << "This database ranges from 1916 to 2017, note that some years in this database have no movies." << endl;
     cout << "To begin, first enter a starting year" << endl
          << endl;
 
+    // Initialize variables used in the loop to default values
     string userInput = "";
     int startingYear = 0;
     int endingYear = 0;
@@ -59,6 +61,7 @@ int main()
                 // Resize that newly revenue-sorted vector to the user input
                 int resizeTo = 0;
                 cout << "How many movies would you like to include actors from?" << endl;
+                cout << "Recommended size: At least 15 if possible" << endl;
                 while (resizeTo < 5)
                 {
                     cout << "Enter a count from 5 to " << yearRangeVec.size() << " : ";
@@ -579,7 +582,9 @@ int main()
                                         if (j == yearRangeVec.at(i)->genres.size() - 1)
                                         {
                                             cout << yearRangeVec.at(i)->genres.at(j) << " ";
-                                        }else{
+                                        }
+                                        else
+                                        {
                                             cout << yearRangeVec.at(i)->genres.at(j) << ", ";
                                         }
                                     }
@@ -595,7 +600,9 @@ int main()
                                         if (j == yearRangeVec.at(i)->cast.size() - 1)
                                         {
                                             cout << yearRangeVec.at(i)->cast.at(j) << " ";
-                                        }else{
+                                        }
+                                        else
+                                        {
                                             cout << yearRangeVec.at(i)->cast.at(j) << ", ";
                                         }
                                     }
@@ -607,7 +614,8 @@ int main()
                                     cout << fixed << setprecision(0) << "Popularity: " << (yearRangeVec.at(i)->revenue * yearRangeVec.at(i)->rating) / 1000000 << endl;
                                     cout << "Average Rating : " << yearRangeVec.at(i)->rating << endl;
                                     cout << "Number of total rating votes : " << yearRangeVec.at(i)->voteCount << endl;
-                                    cout << endl << endl; // spacer between movies
+                                    cout << endl
+                                         << endl; // spacer between movies
                                 }
 
                                 // exit the print all options
@@ -675,96 +683,97 @@ int main()
             cout << "Your input was invalid. Please enter a number from 1 - 5 " << endl;
         }
 
-    } // While !exit loop
+    } // End of program loop.
+} // End of main() function
 
-    /*
-        for (size_t i = 0; i < yearRangeVec.size(); i++)
-        {
-            cout << yearRangeVec.at(i)->movieTitle << ": " << yearRangeVec.at(i)->releaseDate << endl;
-        }
+// A bunch of my old debugging code, retained for posterity.
+/*
+    for (size_t i = 0; i < yearRangeVec.size(); i++)
+    {
+        cout << yearRangeVec.at(i)->movieTitle << ": " << yearRangeVec.at(i)->releaseDate << endl;
+    }
+*/
+
+/*
+    cout << "Limiting the database to " << startingYear << " - " << endingYear << endl;
+    yearRangeVec = limitYearRangeOfStructVec(primaryStructVector, startingYear, endingYear);
+    cout << "Database year range applied" << endl;
     */
 
-    /*
-        cout << "Limiting the database to " << startingYear << " - " << endingYear << endl;
-        yearRangeVec = limitYearRangeOfStructVec(primaryStructVector, startingYear, endingYear);
-        cout << "Database year range applied" << endl;
-        */
+/* Earlier testing
+    // Create the list of all actors in the above nineties movies struct vector
+    vector<string> megaCastList = constructMegaCastList(ninetiesMoviesVec);
 
-    /* Earlier testing
-        // Create the list of all actors in the above nineties movies struct vector
-        vector<string> megaCastList = constructMegaCastList(ninetiesMoviesVec);
+    // Print all release years in the nineties movies vector to see if it worked
+    for (size_t currentIndex = 0; currentIndex < ninetiesMoviesVec.size(); currentIndex++)
+    {
+        cout << ninetiesMoviesVec.at(currentIndex)->movieTitle << ": " << ninetiesMoviesVec.at(currentIndex)->releaseDate << endl;
+    }
 
-        // Print all release years in the nineties movies vector to see if it worked
-        for (size_t currentIndex = 0; currentIndex < ninetiesMoviesVec.size(); currentIndex++)
-        {
-            cout << ninetiesMoviesVec.at(currentIndex)->movieTitle << ": " << ninetiesMoviesVec.at(currentIndex)->releaseDate << endl;
-        }
+    // Print the frequency list of all actors within the year range above
+    vector<Actor> resultOfSort = generateActorFreqVec(megaCastList);
+    printFreqVec(resultOfSort);
 
-        // Print the frequency list of all actors within the year range above
-        vector<Actor> resultOfSort = generateActorFreqVec(megaCastList);
-        printFreqVec(resultOfSort);
-
-        // Previous revenue sorting testing
-        vector<combinedMovieStruct *> ninetiesMoviesVecByRevenue = ascendingRevenueSort(ninetiesMoviesVec);
-        for (size_t currentIndex = 0; currentIndex < ninetiesMoviesVecByRevenue.size(); currentIndex++)
-        {
-            cout << fixed << setprecision(0) << ninetiesMoviesVecByRevenue.at(currentIndex)->movieTitle << ": " << ninetiesMoviesVecByRevenue.at(currentIndex)->revenue << endl;
-        }
+    // Previous revenue sorting testing
+    vector<combinedMovieStruct *> ninetiesMoviesVecByRevenue = ascendingRevenueSort(ninetiesMoviesVec);
+    for (size_t currentIndex = 0; currentIndex < ninetiesMoviesVecByRevenue.size(); currentIndex++)
+    {
+        cout << fixed << setprecision(0) << ninetiesMoviesVecByRevenue.at(currentIndex)->movieTitle << ": " << ninetiesMoviesVecByRevenue.at(currentIndex)->revenue << endl;
+    }
 
 
 
 
 
 
-        */
-
-    /* Profit sorting testing
-     vector<combinedMovieStruct *> ninetiesMoviesVecByRevenue = descendingProfitSort(ninetiesMoviesVec);
-     for (size_t currentIndex = 0; currentIndex < ninetiesMoviesVecByRevenue.size(); currentIndex++)
-     {
-         cout << fixed << setprecision(0) << ninetiesMoviesVecByRevenue.at(currentIndex)->movieTitle << ": " << (ninetiesMoviesVecByRevenue.at(currentIndex)->revenue - ninetiesMoviesVecByRevenue.at(currentIndex)->budget) << endl;
-     }
-     */
-
-    /*
-        // Testing the mega cast list printing all actor freqs of all movies
-
-        // Create the list of all actors in all movies for use in the actor frequency counter functions
-        vector<string> megaCastList = constructMegaCastList(primaryStructVector);
-
-        vector<Actor> resultOfSort = generateActorFreqVec(megaCastList);
-        printFreqVec(resultOfSort);
     */
 
-    /*
-        // Loop to print out movie titles along with their director, genres, and actors list
-                int howMany = 400;
-                for (int outerCount = 0; outerCount < howMany; outerCount++)
+/* Profit sorting testing
+ vector<combinedMovieStruct *> ninetiesMoviesVecByRevenue = descendingProfitSort(ninetiesMoviesVec);
+ for (size_t currentIndex = 0; currentIndex < ninetiesMoviesVecByRevenue.size(); currentIndex++)
+ {
+     cout << fixed << setprecision(0) << ninetiesMoviesVecByRevenue.at(currentIndex)->movieTitle << ": " << (ninetiesMoviesVecByRevenue.at(currentIndex)->revenue - ninetiesMoviesVecByRevenue.at(currentIndex)->budget) << endl;
+ }
+ */
+
+/*
+    // Testing the mega cast list printing all actor freqs of all movies
+
+    // Create the list of all actors in all movies for use in the actor frequency counter functions
+    vector<string> megaCastList = constructMegaCastList(primaryStructVector);
+
+    vector<Actor> resultOfSort = generateActorFreqVec(megaCastList);
+    printFreqVec(resultOfSort);
+*/
+
+/*
+    // Loop to print out movie titles along with their director, genres, and actors list
+            int howMany = 400;
+            for (int outerCount = 0; outerCount < howMany; outerCount++)
+            {
+
+                // Print movie titles
+                cout << primaryStructVector.at(outerCount)->movieTitle << endl;
+
+                // Print director name
+                cout << "Director: " << primaryStructVector.at(outerCount)->director << endl
+                     << endl;
+
+                // Print genres
+                cout << "Genres: ";
+                for (int i = 0; i < primaryStructVector.at(outerCount)->genres.size(); i++)
                 {
-
-                    // Print movie titles
-                    cout << primaryStructVector.at(outerCount)->movieTitle << endl;
-
-                    // Print director name
-                    cout << "Director: " << primaryStructVector.at(outerCount)->director << endl
-                         << endl;
-
-                    // Print genres
-                    cout << "Genres: ";
-                    for (int i = 0; i < primaryStructVector.at(outerCount)->genres.size(); i++)
-                    {
-                        cout << primaryStructVector.at(outerCount)->genres.at(i) << ", ";
-                    }
-                    cout << endl;
-
-                    // Print cast names
-                    cout << endl
-                         << "Cast: " << endl;
-                    for (int i = 0; i < primaryStructVector.at(outerCount)->cast.size(); i++)
-                    {
-                        cout << primaryStructVector.at(outerCount)->cast.at(i) << endl;
-                    }
-                    cout << endl;
+                    cout << primaryStructVector.at(outerCount)->genres.at(i) << ", ";
                 }
-                */
-}
+                cout << endl;
+
+                // Print cast names
+                cout << endl
+                     << "Cast: " << endl;
+                for (int i = 0; i < primaryStructVector.at(outerCount)->cast.size(); i++)
+                {
+                    cout << primaryStructVector.at(outerCount)->cast.at(i) << endl;
+                }
+                cout << endl;
+            }
+            */
