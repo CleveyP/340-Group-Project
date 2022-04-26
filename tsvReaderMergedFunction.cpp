@@ -148,7 +148,7 @@ string whoIsDirector(string extractFromThisString)
         {
             // cout << "Next found starting index is " << foundIndex << endl; debug line
 
-            // A tracker of the current char, used to end the loop on a comma
+            // A variable used to save the name that is found at the index and end the name on a comma or a ]
             char nextChar = 'a';
 
             // A copy of the found index, which can be modified safely
@@ -366,6 +366,7 @@ vector<combinedMovieStruct *> createPrimaryVectorOfStructs()
                 getline(inputFile, currentLine);                   // Get the current row from the document
                 currentRowVector = delimitThis(currentLine, '\t'); // Call the delimiter function to split this line up into columns, using tab as delimiter
 
+                // Will merge credits struct's data into the merged movie struct if the movie title matches
                 creditsStruct *changeToExistingStruct = new creditsStruct;
                 // Failsafe if statement to check if the title of the current row matches the title stored in the struct at the same index in the vector of structs (To make sure we're storing data for the correct movie)
                 // currentRowVector.at(0) is the title value of the current row,  vectorOfMovieRowVectors.at(creditsRunCounter)->movieTitle  is the movie title at the index equivalent to how many times this has run, which should sync up
