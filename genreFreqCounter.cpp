@@ -1,6 +1,7 @@
 
 // Stephen Martel
-// Modified version of actorFreqCounter designed to work with genres instead
+// Custom version of actorFreqCounter designed to work with genres instead
+// Uses alternative variable types but gets the same result
 // 4/21/2022
 
 #include <vector>
@@ -10,6 +11,7 @@
 
 using namespace std;
 
+// Create a Genre struct which will hold the genre name and frequency counter
 struct Genre
 {
     string genreName;
@@ -82,7 +84,7 @@ vector<Genre> genreHighFreqSort(vector<Genre> inputVector)
 // ______________________________________________
 
 // A function to print a vector of genre structs
-void printFreqVec(vector<Genre> genreVec)
+void printGenreFreqVec(vector<Genre> genreVec)
 {
     for (int i = 0; i < genreVec.size(); i++)
     {

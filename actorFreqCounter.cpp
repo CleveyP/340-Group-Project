@@ -1,6 +1,6 @@
 
 // Ronnie Huang + Stephen Martel
-// Original copied over from Ronnie Huang's discord messages and then modified
+// Original copied over from Ronnie Huang's discord messages / Github and then modified
 // 4/21/2022
 
 #include <vector>
@@ -10,6 +10,7 @@
 
 using namespace std;
 
+// Create an actor class to hold the name and frequency counter
 class Actor
 {
 public:
@@ -17,6 +18,7 @@ public:
     int frequency;
 };
 
+// Function that will generate a vector of actor classes from an input string vector
 void add_Actors(vector<string> castVec, vector<Actor> &actorVector)
 {
     Actor adding;
@@ -49,6 +51,7 @@ void add_Actors(vector<string> castVec, vector<Actor> &actorVector)
     }
 }
 
+// Sorts an input vector of actor classes by frequency value, high to low
 void sortHighToLowFreq(vector<Actor> &inputVector)
 {
     vector<Actor> sortedByFreq;
@@ -104,7 +107,7 @@ vector<Actor> highFreqSort(vector<Actor> inputVector)
 
 // Took the existing print loop out of main and made it a function
 // Also changed the print statements output and made them conditional
-void printFreqVec(vector<Actor> actorVec)
+void printActorFreqVec(vector<Actor> actorVec)
 {
     for (int i = 0; i < actorVec.size(); i++)
     {
@@ -120,9 +123,9 @@ void printFreqVec(vector<Actor> actorVec)
     }
 }
 
-// The previous main function's order of calling the other functions in here
+// Recreated the previous main function's order of calling the other functions in here
 // First creates a new empty vector of actor classes
-// Then extracts each actor from the input cast vector and adds them to the vector of actor types
+// Then extracts each actor from the input cast vector and adds them to the new vector of actor classes
 // Then sorts that populated vector of actor types by frequency value, highest first
 // Then returns the sorted vector
 vector<Actor> generateActorFreqVec(vector<string> inputMegaCastVec)
@@ -136,7 +139,7 @@ vector<Actor> generateActorFreqVec(vector<string> inputMegaCastVec)
 }
 
 /*
-  // Old main function for testing purposes.
+  // Old main function for testing & archival purposes.
 int main()
 {
 
@@ -153,7 +156,7 @@ int main()
     inputMegaCastVec.push_back("Azi");
 
     vector<Actor> resultOfSort = generateActorFreqVec(inputMegaCastVec);
-    printFreqVec(resultOfSort);
+    printActorFreqVec(resultOfSort);
 
     return 0;
 }

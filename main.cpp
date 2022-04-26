@@ -91,7 +91,7 @@ int main()
                     cout << "\nMost common actors in the highest grossing movies from " << startingYear << " to " << endingYear << endl;
                     cout << "If this is blank, then that means that no actors starred in more than 1 film in your year range\n"
                          << endl;
-                    printFreqVec(topCastCount);
+                    printActorFreqVec(topCastCount);
                 }
                 // End of Most common actors in the highest grossing movies from this period
             }
@@ -137,7 +137,7 @@ int main()
                     cout << "\nMost common genre categories of the highest grossing movies from " << startingYear << " to " << endingYear << endl;
                     cout << "If this is blank, then that means that no films had genre data for your year range\n"
                          << endl;
-                    printFreqVec(topGenreCount);
+                    printGenreFreqVec(topGenreCount);
                 }
                 // End of Most common genres in the highest grossing movies from this period
             }
